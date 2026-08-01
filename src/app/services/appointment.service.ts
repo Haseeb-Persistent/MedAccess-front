@@ -50,7 +50,7 @@ export interface ApiResponse<T> {
     providedIn: 'root'
 })
 export class AppointmentService {
-    private readonly apiUrl = 'https://localhost:7179/api';
+    private readonly apiUrl = 'http://ivf.runasp.net/api';
 
     constructor(private http: HttpClient) {}
 

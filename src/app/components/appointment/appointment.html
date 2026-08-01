@@ -1,24 +1,19 @@
+<!-- appointment.html -->
 <section id="appointment" class="appointment section global-section">
     <div class="container section-title" data-aos="fade-up">
         <h2>MAKE AN APPOINTMENT</h2>
-        <p>Book your appointment with our fertility specialists. We're here to help you on your journey to parenthood.
-        </p>
+        <p>Book your appointment with our fertility specialists. We're here to help you on your journey to parenthood.</p>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <!-- Success Message with Appointment Details -->
+        <!-- Success Message -->
         <div *ngIf="isSuccess && appointmentResponse" class="alert alert-success appointment-success">
             <h4><i class="bi bi-check-circle-fill"></i> Appointment Booked Successfully!</h4>
             <div class="row mt-3">
                 <div class="col-md-6">
                     <p><strong>Appointment Number:</strong> {{ appointmentResponse.appointmentNumber }}</p>
-                    <!-- <p><strong>Patient Name:</strong> {{ appointmentResponse.patientName }}</p> -->
-                    <!-- <p><strong>Doctor:</strong> {{ appointmentResponse.doctor }}</p>
-                    <p><strong>Service:</strong> {{ appointmentResponse.service }}</p> -->
                 </div>
                 <div class="col-md-6">
-                    <!-- <p><strong>Date:</strong> {{ appointmentResponse.appointmentDate | date:'fullDate' }}</p>
-                    <p><strong>Time:</strong> {{ appointmentResponse.appointmentTime }}</p> -->
                     <p><strong>Status:</strong>
                         <span class="badge" [ngClass]="{
                             'bg-warning': appointmentResponse.appointmentStatus === 'pending',
@@ -56,8 +51,7 @@
             <div *ngIf="!appointmentResponse.redirectUrl" class="mt-3 text-center">
                 <p class="text-success">
                     <i class="bi bi-check-circle"></i>
-                    {{ appointmentResponse.message || 'Appointment confirmed successfully! Please visit the clinic on
-                    your scheduled date.' }}
+                    {{ appointmentResponse.message || 'Appointment confirmed successfully! Please visit the clinic on your scheduled date.' }}
                 </p>
             </div>
         </div>
@@ -68,118 +62,166 @@
             {{ errorMessage }}
         </div>
 
-        <!-- Appointment Form -->
-        <form #appointmentForm="ngForm" (ngSubmit)="onSubmit(appointmentForm)" class="appointment-form">
+        <!-- Appointment Form - Reactive Form -->
+        <form *ngIf="appointmentForm" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" class="appointment-form">
             <div class="row">
+                <!-- Full Name -->
                 <div class="col-md-6 form-group">
                     <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                    <input type="text" name="PatientName" class="form-control" id="PatientName"
-                        placeholder="Enter your full name" [(ngModel)]="appointmentData.fullName" #PatientName="ngModel"
-                        required>
-                    <div *ngIf="PatientName.invalid && PatientName.touched" class="validation-error">
-                        <small *ngIf="PatientName.errors?.['required']">Full name is required</small>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="fullName"
+                        formControlName="fullName"
+                        placeholder="Enter your full name"
+                        [class.is-invalid]="fullName?.invalid && fullName?.touched">
+                    <div *ngIf="fullName?.invalid && fullName?.touched" class="validation-error">
+                        <small *ngIf="fullName?.errors?.['required']">Full name is required</small>
+                        <small *ngIf="fullName?.errors?.['minlength']">Full name must be at least 2 characters</small>
+                        <small *ngIf="fullName?.errors?.['maxlength']">Full name cannot exceed 100 characters</small>
                     </div>
                 </div>
 
+                <!-- Mobile Number -->
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                     <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control" name="Mobile" id="Mobile"
-                        placeholder="Enter your mobile number" [(ngModel)]="appointmentData.mobileNumber"
-                        #Mobile="ngModel" required pattern="[0-9+\-() ]+">
-                    <div *ngIf="Mobile.invalid && Mobile.touched" class="validation-error">
-                        <small *ngIf="Mobile.errors?.['required']">Mobile number is required</small>
-                        <small *ngIf="Mobile.errors?.['pattern']">Please enter a valid mobile number</small>
+                    <input 
+                        type="tel" 
+                        class="form-control" 
+                        id="mobileNumber"
+                        formControlName="mobileNumber"
+                        placeholder="Enter your mobile number"
+                        [class.is-invalid]="mobileNumber?.invalid && mobileNumber?.touched">
+                    <div *ngIf="mobileNumber?.invalid && mobileNumber?.touched" class="validation-error">
+                        <small *ngIf="mobileNumber?.errors?.['required']">Mobile number is required</small>
+                        <small *ngIf="mobileNumber?.errors?.['pattern']">Please enter a valid mobile number</small>
                     </div>
                 </div>
             </div>
 
             <div class="row">
+                <!-- Email -->
                 <div class="col-md-6 form-group mt-3">
                     <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" name="Email" id="Email"
-                        placeholder="Enter your email address" [(ngModel)]="appointmentData.email" #Email="ngModel"
-                        required email>
-                    <div *ngIf="Email.invalid && Email.touched" class="validation-error">
-                        <small *ngIf="Email.errors?.['required']">Email is required</small>
-                        <small *ngIf="Email.errors?.['email']">Please enter a valid email address</small>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        id="email"
+                        formControlName="email"
+                        placeholder="Enter your email address"
+                        [class.is-invalid]="email?.invalid && email?.touched">
+                    <div *ngIf="email?.invalid && email?.touched" class="validation-error">
+                        <small *ngIf="email?.errors?.['required']">Email is required</small>
+                        <small *ngIf="email?.errors?.['email']">Please enter a valid email address</small>
                     </div>
                 </div>
 
+                <!-- Country -->
                 <div class="col-md-6 form-group mt-3">
                     <label class="form-label">Country <span class="text-danger">*</span></label>
-                    <select name="Country" id="Country" class="form-select" [(ngModel)]="appointmentData.country"
-                        (ngModelChange)="onCountryChange()" #Country="ngModel" required>
+                    <select 
+                        class="form-select" 
+                        id="country"
+                        formControlName="country"
+                        [class.is-invalid]="country?.invalid && country?.touched">
                         <option value="">Select Country</option>
                         <option *ngFor="let country of countries" [value]="country.name">
                             {{ country.name }}
                         </option>
                     </select>
-                    <div *ngIf="Country.invalid && Country.touched" class="validation-error">
-                        <small *ngIf="Country.errors?.['required']">Please select your country</small>
+                    <div *ngIf="country?.invalid && country?.touched" class="validation-error">
+                        <small *ngIf="country?.errors?.['required']">Please select your country</small>
                     </div>
                 </div>
             </div>
 
             <div class="row">
+                <!-- City -->
                 <div class="col-md-6 form-group mt-3">
                     <label class="form-label">City <span class="text-danger">*</span></label>
-                    <select name="City" id="City" class="form-select" [(ngModel)]="appointmentData.city" #City="ngModel"
-                        required>
+                    <select 
+                        class="form-select" 
+                        id="city"
+                        formControlName="city"
+                        [class.is-invalid]="city?.invalid && city?.touched">
                         <option value="">Select City</option>
                         <option *ngFor="let city of filteredCities" [value]="city.name">
                             {{ city.name }}
                         </option>
                     </select>
-                    <div *ngIf="City.invalid && City.touched" class="validation-error">
-                        <small *ngIf="City.errors?.['required']">Please select your city</small>
+                    <div *ngIf="city?.invalid && city?.touched" class="validation-error">
+                        <small *ngIf="city?.errors?.['required']">Please select your city</small>
                     </div>
                 </div>
 
+                <!-- Service -->
                 <div class="col-md-6 form-group mt-3">
                     <label class="form-label">Service <span class="text-danger">*</span></label>
-                    <select name="service" id="service" class="form-select" [(ngModel)]="appointmentData.service"
-                        (ngModelChange)="onServiceChange()" #service="ngModel" required>
+                    <select 
+                        class="form-select" 
+                        id="service"
+                        formControlName="service"
+                        [class.is-invalid]="service?.invalid && service?.touched">
                         <option value="">Select Service</option>
                         <option *ngFor="let service of services" [value]="service.serviceName">
                             {{ service.serviceName }} - {{ service.consultationFee | currency:service.currency }}
                         </option>
                     </select>
-                    <div *ngIf="service.invalid && service.touched" class="validation-error">
-                        <small *ngIf="service.errors?.['required']">Please select a service</small>
+                    <div *ngIf="service?.invalid && service?.touched" class="validation-error">
+                        <small *ngIf="service?.errors?.['required']">Please select a service</small>
+                    </div>
+                    <div *ngIf="isLoadingServices" class="text-muted small mt-1">
+                        <i class="bi bi-spinner bi-spin"></i> Loading services...
                     </div>
                 </div>
             </div>
 
             <div class="row">
+                <!-- Doctor -->
                 <div class="col-md-6 form-group mt-3">
                     <label class="form-label">Doctor <span class="text-danger">*</span></label>
-                    <select name="Doctor" id="Doctor" class="form-select" [(ngModel)]="appointmentData.doctor"
-                        #Doctor="ngModel" required>
+                    <select 
+                        class="form-select" 
+                        id="doctor"
+                        formControlName="doctor"
+                        [class.is-invalid]="doctor?.invalid && doctor?.touched">
                         <option value="">Select Doctor</option>
                         <option *ngFor="let doctor of filteredDoctors" [value]="doctor.name">
                             {{ doctor.name }}
                         </option>
                     </select>
-                    <div *ngIf="Doctor.invalid && Doctor.touched" class="validation-error">
-                        <small *ngIf="Doctor.errors?.['required']">Please select a doctor</small>
+                    <div *ngIf="doctor?.invalid && doctor?.touched" class="validation-error">
+                        <small *ngIf="doctor?.errors?.['required']">Please select a doctor</small>
                     </div>
                 </div>
 
+                <!-- Appointment Date -->
                 <div class="col-md-3 form-group mt-3">
                     <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" name="AppointmentDate" id="AppointmentDate" [min]="minDate"
-                        [(ngModel)]="appointmentData.appointmentDate" #AppointmentDate="ngModel" required>
-                    <div *ngIf="AppointmentDate.invalid && AppointmentDate.touched" class="validation-error">
-                        <small *ngIf="AppointmentDate.errors?.['required']">Date is required</small>
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        id="appointmentDate"
+                        formControlName="appointmentDate"
+                        [min]="minDate"
+                        [class.is-invalid]="appointmentDate?.invalid && appointmentDate?.touched">
+                    <div *ngIf="appointmentDate?.invalid && appointmentDate?.touched" class="validation-error">
+                        <small *ngIf="appointmentDate?.errors?.['required']">Date is required</small>
+                        <small *ngIf="appointmentDate?.errors?.['pastDate']">Date must be in the future</small>
                     </div>
                 </div>
 
+                <!-- Appointment Time -->
                 <div class="col-md-3 form-group mt-3">
                     <label class="form-label">Appointment Time <span class="text-danger">*</span></label>
-                    <input type="time" class="form-control" name="AppointmentTime" id="AppointmentTime"
-                        [(ngModel)]="appointmentData.appointmentTime" #AppointmentTime="ngModel" required>
-                    <div *ngIf="AppointmentTime.invalid && AppointmentTime.touched" class="validation-error">
-                        <small *ngIf="AppointmentTime.errors?.['required']">Time is required</small>
+                    <input 
+                        type="time" 
+                        class="form-control" 
+                        id="appointmentTime"
+                        formControlName="appointmentTime"
+                        [class.is-invalid]="appointmentTime?.invalid && appointmentTime?.touched">
+                    <div *ngIf="appointmentTime?.invalid && appointmentTime?.touched" class="validation-error">
+                        <small *ngIf="appointmentTime?.errors?.['required']">Time is required</small>
                     </div>
                 </div>
             </div>
@@ -190,8 +232,11 @@
                     <label class="form-label">Payment Method <span class="text-danger">*</span></label>
                     <div class="payment-options">
                         <div class="payment-option">
-                            <input type="radio" name="PaymentMethod" id="paymentOnline" value="online"
-                                [(ngModel)]="appointmentData.paymentMethod" #PaymentMethod="ngModel" required>
+                            <input 
+                                type="radio" 
+                                id="paymentOnline" 
+                                value="online"
+                                formControlName="paymentMethod">
                             <label for="paymentOnline" class="payment-label">
                                 <i class="bi bi-credit-card"></i>
                                 Online Payment
@@ -199,22 +244,25 @@
                             </label>
                         </div>
                         <div class="payment-option">
-                            <input type="radio" name="PaymentMethod" id="paymentOffline" value="offline"
-                                [(ngModel)]="appointmentData.paymentMethod" #PaymentMethod="ngModel" required>
+                            <input 
+                                type="radio" 
+                                id="paymentOffline" 
+                                value="offline"
+                                formControlName="paymentMethod">
                             <label for="paymentOffline" class="payment-label">
                                 <i class="bi bi-cash"></i>
                                 Pay at Clinic
                             </label>
                         </div>
                     </div>
-                    <div *ngIf="PaymentMethod.invalid && PaymentMethod.touched" class="validation-error">
+                    <div *ngIf="paymentMethod?.invalid && paymentMethod?.touched" class="validation-error">
                         <small>Please select a payment method</small>
                     </div>
                 </div>
             </div>
 
-            <!-- Online Payment Details (conditional) -->
-            <div *ngIf="appointmentData.paymentMethod === 'online'" class="row mt-3">
+            <!-- Online Payment Details -->
+            <div *ngIf="appointmentForm?.get('paymentMethod')?.value === 'online'" class="row mt-3">
                 <div class="col-12">
                     <div class="payment-details">
                         <h5><i class="bi bi-shield-lock"></i> Secure Online Payment</h5>
@@ -237,9 +285,15 @@
             <!-- Message -->
             <div class="form-group mt-3">
                 <label class="form-label">Message (Optional)</label>
-                <textarea class="form-control" name="Message" id="Message" rows="4"
-                    placeholder="Any special requests or additional information..."
-                    [(ngModel)]="appointmentData.message" #Message="ngModel"></textarea>
+                <textarea 
+                    class="form-control" 
+                    id="message"
+                    rows="4"
+                    formControlName="message"
+                    placeholder="Any special requests or additional information..."></textarea>
+                <div *ngIf="message?.invalid && message?.touched" class="validation-error">
+                    <small *ngIf="message?.errors?.['maxlength']">Message cannot exceed 500 characters</small>
+                </div>
             </div>
 
             <!-- Submit Section -->
@@ -249,7 +303,10 @@
                     Submitting your appointment request...
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-appointment" [disabled]="isSubmitting">
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary btn-appointment" 
+                        [disabled]="isSubmitting || appointmentForm?.invalid">
                         <span *ngIf="!isSubmitting">
                             <i class="bi bi-calendar-check"></i> Book Appointment
                         </span>

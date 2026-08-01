@@ -1,34 +1,22 @@
 // appointment.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AppointmentService, AppointmentResponse, ApiResponse, ServiceDto } from './../../services/appointment.service';
+import { AppointmentService, AppointmentResponse, ServiceDto } from './../../services/appointment.service';
 
 declare var Stripe: any;
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './appointment.html',
   styleUrls: ['./appointment.css']
 })
 export class AppointmentComponent implements OnInit {
-  appointmentData = {
-    fullName: '',
-    mobileNumber: '',
-    email: '',
-    country: '',
-    city: '',
-    service: '', // This will be the ServiceName from API
-    doctor: '',
-    appointmentDate: '',
-    appointmentTime: '',
-    message: '',
-    paymentMethod: 'online'
-  };
+  appointmentForm!: FormGroup;
 
   countries = [
     { id: 1, name: 'Pakistan' },
@@ -58,7 +46,7 @@ export class AppointmentComponent implements OnInit {
     { id: 12, name: 'Vancouver', country: 'Canada' }
   ];
 
-  // Services loaded from API - DYNAMIC!
+  // Services loaded from API
   services: ServiceDto[] = [];
 
   doctors = [
@@ -88,6 +76,7 @@ export class AppointmentComponent implements OnInit {
   isLoadingServices = false;
 
   constructor(
+    private fb: FormBuilder,
     private appointmentService: AppointmentService,
     private router: Router
   ) {}
@@ -98,12 +87,74 @@ export class AppointmentComponent implements OnInit {
     this.filteredDoctors = this.doctors;
     this.filteredCities = this.cities;
 
+    // Initialize Form
+    this.initializeForm();
+
     // Load services from API
     await this.loadServices();
 
     // Initialize Stripe
     this.stripe = Stripe(this.stripePublishableKey);
   }
+
+  // ============================================
+  // INITIALIZE REACTIVE FORM - FIXED REGEX
+  // ============================================
+  initializeForm(): void {
+    this.appointmentForm = this.fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      // FIXED: Put - at the end or escape it
+      mobileNumber: ['', [Validators.required, Validators.pattern('^[0-9+() -]+$')]], // FIXED!
+      email: ['', [Validators.required, Validators.email]],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
+      service: ['', Validators.required],
+      doctor: ['', Validators.required],
+      appointmentDate: ['', [Validators.required, this.futureDateValidator]],
+      appointmentTime: ['', Validators.required],
+      message: ['', Validators.maxLength(500)],
+      paymentMethod: ['online', Validators.required]
+    });
+
+    // Listen to country change for filtering cities
+    this.appointmentForm.get('country')?.valueChanges.subscribe(country => {
+      this.onCountryChange(country);
+    });
+
+    // Listen to service change for filtering doctors
+    this.appointmentForm.get('service')?.valueChanges.subscribe(service => {
+      this.onServiceChange(service);
+    });
+  }
+
+  // ============================================
+  // CUSTOM VALIDATOR: Future Date
+  // ============================================
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (selectedDate < today) {
+      return { pastDate: true };
+    }
+    return null;
+  }
+
+  // ============================================
+  // GETTERS FOR EASY ACCESS IN TEMPLATE
+  // ============================================
+  get fullName() { return this.appointmentForm?.get('fullName'); }
+  get mobileNumber() { return this.appointmentForm?.get('mobileNumber'); }
+  get email() { return this.appointmentForm?.get('email'); }
+  get country() { return this.appointmentForm?.get('country'); }
+  get city() { return this.appointmentForm?.get('city'); }
+  get service() { return this.appointmentForm?.get('service'); }
+  get doctor() { return this.appointmentForm?.get('doctor'); }
+  get appointmentDate() { return this.appointmentForm?.get('appointmentDate'); }
+  get appointmentTime() { return this.appointmentForm?.get('appointmentTime'); }
+  get message() { return this.appointmentForm?.get('message'); }
+  get paymentMethod() { return this.appointmentForm?.get('paymentMethod'); }
 
   // ============================================
   // LOAD SERVICES FROM API
@@ -119,43 +170,50 @@ export class AppointmentComponent implements OnInit {
         console.log('Services loaded from API:', this.services);
       } else {
         console.error('Failed to load services:', result?.error);
-        // You can show an error message to the user
       }
     } catch (error) {
       console.error('Error loading services:', error);
-      // You can show an error message to the user
     } finally {
       this.isLoadingServices = false;
     }
   }
 
-  onCountryChange(): void {
-    if (this.appointmentData.country) {
+  // ============================================
+  // COUNTRY CHANGE - Filter Cities
+  // ============================================
+  onCountryChange(country: string): void {
+    if (country) {
       this.filteredCities = this.cities.filter(
-        city => city.country === this.appointmentData.country
+        city => city.country === country
       );
-      this.appointmentData.city = '';
+      this.appointmentForm?.get('city')?.setValue('');
     } else {
       this.filteredCities = this.cities;
     }
   }
 
-  onServiceChange(): void {
-    if (this.appointmentData.service) {
+  // ============================================
+  // SERVICE CHANGE - Filter Doctors
+  // ============================================
+  onServiceChange(service: string): void {
+    if (service) {
       this.filteredDoctors = this.doctors.filter(
-        doctor => doctor.service === this.appointmentData.service
+        doctor => doctor.service === service
       );
-      this.appointmentData.doctor = '';
+      this.appointmentForm?.get('doctor')?.setValue('');
     } else {
       this.filteredDoctors = this.doctors;
     }
   }
 
-  async onSubmit(form: NgForm): Promise<void> {
-    if (form.invalid) {
-      Object.keys(form.controls).forEach(key => {
-        form.controls[key].markAsTouched();
-      });
+  // ============================================
+  // FORM SUBMISSION
+  // ============================================
+  async onSubmit(): Promise<void> {
+    if (!this.appointmentForm) return;
+    
+    if (this.appointmentForm.invalid) {
+      this.appointmentForm.markAllAsTouched();
       return;
     }
 
@@ -165,8 +223,10 @@ export class AppointmentComponent implements OnInit {
     this.errorMessage = '';
 
     try {
-      // Step 1: Book Appointment - The service handles the field mapping
-      const appointmentResult = await this.appointmentService.bookAppointment(this.appointmentData).toPromise();
+      const formData = this.appointmentForm.value;
+      
+      // Step 1: Book Appointment
+      const appointmentResult = await this.appointmentService.bookAppointment(formData).toPromise();
       
       console.log('Appointment Result:', appointmentResult);
 
@@ -178,10 +238,9 @@ export class AppointmentComponent implements OnInit {
       this.isSuccess = true;
 
       // Step 2: If online payment, create checkout session and redirect
-      if (this.appointmentData.paymentMethod === 'online') {
+      if (formData.paymentMethod === 'online') {
         await this.handleOnlinePayment(this.appointmentResponse);
       } else {
-        // Offline payment - appointment is booked
         this.isSubmitting = false;
         setTimeout(() => this.isSuccess = false, 10000);
       }
@@ -195,6 +254,9 @@ export class AppointmentComponent implements OnInit {
     }
   }
 
+  // ============================================
+  // ONLINE PAYMENT HANDLER
+  // ============================================
   async handleOnlinePayment(appointment: AppointmentResponse): Promise<void> {
     try {
       // Create Stripe Checkout Session
@@ -224,7 +286,9 @@ export class AppointmentComponent implements OnInit {
     }
   }
 
-  // Manual redirect method
+  // ============================================
+  // REDIRECT TO PAYMENT
+  // ============================================
   redirectToPayment(): void {
     if (this.appointmentResponse?.redirectUrl) {
       window.location.href = this.appointmentResponse.redirectUrl;
@@ -233,8 +297,13 @@ export class AppointmentComponent implements OnInit {
     }
   }
 
-  resetForm(form: NgForm): void {
-    this.appointmentData = {
+  // ============================================
+  // RESET FORM
+  // ============================================
+  resetForm(): void {
+    if (!this.appointmentForm) return;
+    
+    this.appointmentForm.reset({
       fullName: '',
       mobileNumber: '',
       email: '',
@@ -246,11 +315,12 @@ export class AppointmentComponent implements OnInit {
       appointmentTime: '',
       message: '',
       paymentMethod: 'online'
-    };
+    });
     this.filteredCities = this.cities;
     this.filteredDoctors = this.doctors;
     this.redirectUrl = null;
     this.appointmentResponse = null;
-    form.resetForm();
+    this.appointmentForm.markAsPristine();
+    this.appointmentForm.markAsUntouched();
   }
 }
