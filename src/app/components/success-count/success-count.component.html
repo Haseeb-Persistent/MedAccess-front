@@ -1,0 +1,39 @@
+<!-- ====== SUCCESS COUNT SECTION ====== -->
+<section class="success-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left: Success Stats -->
+            <div class="col-lg-6">
+                <div class="success-content">
+                    <div class="section-head">
+                        <h2>Our <span>Success Count</span></h2>
+                        <p>Celebrating thousands of successful fertility journeys and bringing joy to families worldwide.</p>
+                    </div>
+                    
+                    <div class="success-stats">
+                        <div class="stat-item" *ngFor="let stat of stats">
+                            <div class="stat-number">
+                                <span class="counter" [attr.data-target]="stat.value">{{ stat.displayValue }}</span>
+                                <span class="plus" *ngIf="stat.suffix === '+'">+</span>
+                                <span class="percent" *ngIf="stat.suffix === '%'">%</span>
+                            </div>
+                            <p>{{ stat.label }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right: Success Stories Images -->
+            <div class="col-lg-6">
+                <div class="success-images">
+                    <div class="image-grid">
+                        <div class="grid-item" *ngFor="let person of people">
+                            <img [src]="person.image" [alt]="person.name">
+                            <span class="name-tag">{{ person.name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

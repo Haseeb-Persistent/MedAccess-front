@@ -1,0 +1,335 @@
+<section id="appointment" class="appointment section global-section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>MAKE AN APPOINTMENT</h2>
+        <p>Book your appointment with our fertility specialists. We're here to help you on your journey to parenthood.</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <!-- Success Message with Appointment Details -->
+        <div *ngIf="isSuccess && appointmentResponse" class="alert alert-success appointment-success">
+            <h4><i class="bi bi-check-circle-fill"></i> Appointment Booked Successfully!</h4>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <p><strong>Appointment Number:</strong> {{ appointmentResponse.appointmentNumber }}</p>
+                    <!-- <p><strong>Patient Name:</strong> {{ appointmentResponse.patientName }}</p> -->
+                    <!-- <p><strong>Doctor:</strong> {{ appointmentResponse.doctor }}</p>
+                    <p><strong>Service:</strong> {{ appointmentResponse.service }}</p> -->
+                </div>
+                <div class="col-md-6">
+                    <!-- <p><strong>Date:</strong> {{ appointmentResponse.appointmentDate | date:'fullDate' }}</p>
+                    <p><strong>Time:</strong> {{ appointmentResponse.appointmentTime }}</p> -->
+                    <p><strong>Status:</strong> 
+                        <span class="badge" [ngClass]="{
+                            'bg-warning': appointmentResponse.appointmentStatus === 'pending',
+                            'bg-success': appointmentResponse.appointmentStatus === 'Confirmed',
+                            'bg-danger': appointmentResponse.appointmentStatus === 'Cancelled'
+                        }">
+                            {{ appointmentResponse.appointmentStatus }}
+                        </span>
+                    </p>
+                    <p *ngIf="appointmentResponse.paymentStatus">
+                        <strong>Payment Status:</strong> 
+                        <span class="badge" [ngClass]="{
+                            'bg-warning': appointmentResponse.paymentStatus === 'pending',
+                            'bg-success': appointmentResponse.paymentStatus === 'completed' || appointmentResponse.paymentStatus === 'paid',
+                            'bg-danger': appointmentResponse.paymentStatus === 'failed'
+                        }">
+                            {{ appointmentResponse.paymentStatus }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Redirect Button for Online Payment -->
+            <div *ngIf="appointmentResponse.redirectUrl" class="mt-3 text-center">
+                <button class="btn btn-primary btn-lg" (click)="redirectToPayment()">
+                    <i class="bi bi-credit-card"></i> Proceed to Payment
+                </button>
+                <p class="text-muted mt-2">
+                    <i class="bi bi-info-circle"></i> 
+                    You will be redirected to the payment page to complete your booking.
+                </p>
+            </div>
+            
+            <!-- Message for Offline Payment -->
+            <div *ngIf="!appointmentResponse.redirectUrl" class="mt-3 text-center">
+                <p class="text-success">
+                    <i class="bi bi-check-circle"></i> 
+                    {{ appointmentResponse.message || 'Appointment confirmed successfully! Please visit the clinic on your scheduled date.' }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="isError" class="alert alert-danger">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ errorMessage }}
+        </div>
+
+        <!-- Appointment Form -->
+        <form #appointmentForm="ngForm" (ngSubmit)="onSubmit(appointmentForm)" class="appointment-form">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label class="form-label">Full Name <span class="text-danger">*</span></label>
+                    <input 
+                        type="text" 
+                        name="PatientName" 
+                        class="form-control" 
+                        id="PatientName" 
+                        placeholder="Enter your full name" 
+                        [(ngModel)]="appointmentData.fullName"
+                        #PatientName="ngModel"
+                        required>
+                    <div *ngIf="PatientName.invalid && PatientName.touched" class="validation-error">
+                        <small *ngIf="PatientName.errors?.['required']">Full name is required</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                    <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                    <input 
+                        type="tel" 
+                        class="form-control" 
+                        name="Mobile" 
+                        id="Mobile" 
+                        placeholder="Enter your mobile number" 
+                        [(ngModel)]="appointmentData.mobileNumber"
+                        #Mobile="ngModel"
+                        required 
+                        pattern="[0-9+\-() ]+">
+                    <div *ngIf="Mobile.invalid && Mobile.touched" class="validation-error">
+                        <small *ngIf="Mobile.errors?.['required']">Mobile number is required</small>
+                        <small *ngIf="Mobile.errors?.['pattern']">Please enter a valid mobile number</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group mt-3">
+                    <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        name="Email" 
+                        id="Email" 
+                        placeholder="Enter your email address" 
+                        [(ngModel)]="appointmentData.email"
+                        #Email="ngModel"
+                        required 
+                        email>
+                    <div *ngIf="Email.invalid && Email.touched" class="validation-error">
+                        <small *ngIf="Email.errors?.['required']">Email is required</small>
+                        <small *ngIf="Email.errors?.['email']">Please enter a valid email address</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 form-group mt-3">
+                    <label class="form-label">Country <span class="text-danger">*</span></label>
+                    <select 
+                        name="Country" 
+                        id="Country" 
+                        class="form-select" 
+                        [(ngModel)]="appointmentData.country"
+                        (ngModelChange)="onCountryChange()"
+                        #Country="ngModel"
+                        required>
+                        <option value="">Select Country</option>
+                        <option *ngFor="let country of countries" [value]="country.name">
+                            {{ country.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="Country.invalid && Country.touched" class="validation-error">
+                        <small *ngIf="Country.errors?.['required']">Please select your country</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group mt-3">
+                    <label class="form-label">City <span class="text-danger">*</span></label>
+                    <select 
+                        name="City" 
+                        id="City" 
+                        class="form-select" 
+                        [(ngModel)]="appointmentData.city"
+                        #City="ngModel"
+                        required>
+                        <option value="">Select City</option>
+                        <option *ngFor="let city of filteredCities" [value]="city.name">
+                            {{ city.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="City.invalid && City.touched" class="validation-error">
+                        <small *ngIf="City.errors?.['required']">Please select your city</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 form-group mt-3">
+                    <label class="form-label">Service <span class="text-danger">*</span></label>
+                    <select 
+                        name="Service" 
+                        id="Service" 
+                        class="form-select" 
+                        [(ngModel)]="appointmentData.service"
+                        (ngModelChange)="onServiceChange()"
+                        #Service="ngModel"
+                        required>
+                        <option value="">Select Service</option>
+                        <option *ngFor="let service of services" [value]="service.name">
+                            {{ service.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="Service.invalid && Service.touched" class="validation-error">
+                        <small *ngIf="Service.errors?.['required']">Please select a service</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group mt-3">
+                    <label class="form-label">Doctor <span class="text-danger">*</span></label>
+                    <select 
+                        name="Doctor" 
+                        id="Doctor" 
+                        class="form-select" 
+                        [(ngModel)]="appointmentData.doctor"
+                        #Doctor="ngModel"
+                        required>
+                        <option value="">Select Doctor</option>
+                        <option *ngFor="let doctor of filteredDoctors" [value]="doctor.name">
+                            {{ doctor.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="Doctor.invalid && Doctor.touched" class="validation-error">
+                        <small *ngIf="Doctor.errors?.['required']">Please select a doctor</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 form-group mt-3">
+                    <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        name="AppointmentDate" 
+                        id="AppointmentDate" 
+                        [min]="minDate"
+                        [(ngModel)]="appointmentData.appointmentDate"
+                        #AppointmentDate="ngModel"
+                        required>
+                    <div *ngIf="AppointmentDate.invalid && AppointmentDate.touched" class="validation-error">
+                        <small *ngIf="AppointmentDate.errors?.['required']">Date is required</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 form-group mt-3">
+                    <label class="form-label">Appointment Time <span class="text-danger">*</span></label>
+                    <input 
+                        type="time" 
+                        class="form-control" 
+                        name="AppointmentTime" 
+                        id="AppointmentTime" 
+                        [(ngModel)]="appointmentData.appointmentTime"
+                        #AppointmentTime="ngModel"
+                        required>
+                    <div *ngIf="AppointmentTime.invalid && AppointmentTime.touched" class="validation-error">
+                        <small *ngIf="AppointmentTime.errors?.['required']">Time is required</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label class="form-label">Payment Method <span class="text-danger">*</span></label>
+                    <div class="payment-options">
+                        <div class="payment-option">
+                            <input 
+                                type="radio" 
+                                name="PaymentMethod" 
+                                id="paymentOnline" 
+                                value="online"
+                                [(ngModel)]="appointmentData.paymentMethod"
+                                #PaymentMethod="ngModel"
+                                required>
+                            <label for="paymentOnline" class="payment-label">
+                                <i class="bi bi-credit-card"></i>
+                                Online Payment
+                                <span class="badge bg-success">Secure</span>
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input 
+                                type="radio" 
+                                name="PaymentMethod" 
+                                id="paymentOffline" 
+                                value="offline"
+                                [(ngModel)]="appointmentData.paymentMethod"
+                                #PaymentMethod="ngModel"
+                                required>
+                            <label for="paymentOffline" class="payment-label">
+                                <i class="bi bi-cash"></i>
+                                Pay at Clinic
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="PaymentMethod.invalid && PaymentMethod.touched" class="validation-error">
+                        <small>Please select a payment method</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Online Payment Details (conditional) -->
+            <div *ngIf="appointmentData.paymentMethod === 'online'" class="row mt-3">
+                <div class="col-12">
+                    <div class="payment-details">
+                        <h5><i class="bi bi-shield-lock"></i> Secure Online Payment</h5>
+                        <p>We accept all major credit/debit cards and digital wallets.</p>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            You will be redirected to the payment gateway after submitting the form.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group mt-3">
+                <label class="form-label">Message (Optional)</label>
+                <textarea 
+                    class="form-control" 
+                    name="Message" 
+                    id="Message"
+                    rows="4" 
+                    placeholder="Any special requests or additional information..."
+                    [(ngModel)]="appointmentData.message"
+                    #Message="ngModel"></textarea>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="mt-4">
+                <div class="loading" *ngIf="isSubmitting">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Submitting your appointment request...
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-appointment" [disabled]="isSubmitting">
+                        <span *ngIf="!isSubmitting">
+                            <i class="bi bi-calendar-check"></i> Book Appointment
+                        </span>
+                        <span *ngIf="isSubmitting">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Processing...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

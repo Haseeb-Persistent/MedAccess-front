@@ -1,0 +1,57 @@
+<!-- ====== ANNOUNCEMENT MODAL ====== -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModalOnOverlay($event)">
+    <div class="modal-container">
+        <button class="modal-close" (click)="closeModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="modal-content">
+            <!-- Badge -->
+            <div class="modal-badge">
+                <span class="badge-text">🎯 New Location</span>
+            </div>
+            
+            <!-- Main Heading -->
+            <div class="modal-heading">
+                <h1>Pakistan's 1st</h1>
+                <h1 class="highlight">AI Based Fertility Centre</h1>
+            </div>
+            
+            <!-- Location Update -->
+            <div class="location-update">
+                <div class="location-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="location-content">
+                    <h3>📍 Location Update</h3>
+                    <p>Our Karachi branch was previously located in Defence Phase 6, and has now moved to our new location in <strong>F-57/1 Clifton Block 8</strong>.</p>
+                </div>
+            </div>
+            
+            <!-- Contact -->
+            <div class="contact-info">
+                <i class="fas fa-phone-alt"></i>
+                <span>PTCL: <a href="tel:02135297129">021-35297129</a></span>
+            </div>
+            
+            <!-- Divider -->
+            <div class="modal-divider"></div>
+            
+            <!-- Footer Text -->
+            <div class="modal-footer-text">
+                <span class="ai-label">AI-VF</span>
+                <span class="tagline">Advanced Intelligence for Fertility</span>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="modal-actions">
+                <button class="btn-primary-modal" (click)="closeModal()">
+                    Explore Now <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn-secondary-modal" (click)="closeModal()">
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

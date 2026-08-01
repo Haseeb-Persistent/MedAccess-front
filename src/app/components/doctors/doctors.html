@@ -1,0 +1,53 @@
+<!-- ====== DOCTORS SECTION ====== -->
+<section class="team-section global-section">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-head text-center">
+            <h2>Our <span>Doctor</span></h2>
+            <p>Meet our dedicated team of fertility specialists, embryologists, and support staff committed to providing compassionate care throughout your journey.</p>
+        </div>
+
+        <!-- Custom Slider -->
+        <div class="slide-container" 
+             (mouseenter)="pauseAutoplay()" 
+             (mouseleave)="resumeAutoplay()">
+            
+            <div class="slide-content">
+                <div class="card-wrapper">
+                    <!-- Card Loop -->
+                    <div class="card" *ngFor="let doctor of doctors">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+                            <div class="card-image">
+                                <img [src]="doctor.image" alt="{{ doctor.name }}" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">{{ doctor.name }}</h2>
+                            <p class="designation">{{ doctor.designation }}</p>
+                            <p class="description">{{ doctor.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <button class="slider-btn prev-btn" (click)="prevSlide()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next-btn" (click)="nextSlide()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Pagination Dots -->
+        <div class="slider-dots">
+            <span class="custom-dot" 
+                  *ngFor="let doctor of doctors; let i = index"
+                  [class.active]="i === currentSlide"
+                  [style.display]="i <= maxSlides ? 'inline-block' : 'none'"
+                  (click)="goToSlide(i)">
+            </span>
+        </div>
+    </div>
+</section>

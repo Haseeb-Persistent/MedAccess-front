@@ -1,0 +1,126 @@
+<!-- ====== TOP HEADER ====== -->
+<header class="top-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6">
+                <div class="header-contact">
+                    <ul>
+                        <li>
+                            <i class="fa-regular fa-clock"></i>
+                            Sun - Thu : 10:00AM - 06:00PM
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            28/A Street, New York City
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel:+880123456789">+88 0123 456 789</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6">
+                <div class="header-social">
+                    <ul>
+                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ====== MAIN NAVBAR ====== -->
+<nav class="navbar navbar-expand-lg main-navbar" id="mainNavbarWrapper">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand logo" href="#">
+            <img src="https://i.ibb.co/mF9n3Dn4/New-Med-Access-LOGO.png" alt="Logo">
+        </a>
+
+        <!-- Navbar Toggler -->
+        <button class="navbar-toggler" type="button" (click)="toggleMobileMenu()"
+            [attr.aria-expanded]="isMobileMenuOpen" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+            </span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" [class.show]="isMobileMenuOpen" id="mainNavbar">
+            <!-- Close Button for Mobile -->
+            <button class="navbar-close-btn d-lg-none" (click)="toggleMobileMenu()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <ul class="navbar-nav mx-auto">
+                <!-- Home Dropdown -->
+                 <li class="nav-item">
+                    <a class="nav-link" href="#" (click)="closeMobileMenu()">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="About-Us" (click)="closeMobileMenu()">About</a>
+                </li>
+
+                <!-- Services Dropdown -->
+                <li class="nav-item dropdown" [class.show]="activeDropdown === 'services'">
+                    <a class="nav-link dropdown-toggle" href="#" (click)="toggleDropdown($event, 'services')">
+                        Services <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" [class.show]="activeDropdown === 'services'">
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">Ai-IVF</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">Ai-ICSI</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">.AI-IVM</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">AI-IUI</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">AI-Egg Pooling</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">AI-Stem Cell Ovarian Rejuvenation</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">AI-Stem Cell E.D</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">AI-Egg Freezing</a></li> <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" (click)="closeMobileMenu()">AI-Gender Selection</a></li> <li>
+                        </li>
+                    </ul>
+                           <li class="nav-item">
+                    <a style="display: flex;" class="nav-link" href="#" (click)="closeMobileMenu()">IVF vs AI-IVF</a>
+                </li>
+            
+
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="Blog" (click)="closeMobileMenu()">Blog</a>
+                </li>
+             
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="Contact-Us" (click)="closeMobileMenu()">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Book Appointment Button -->
+            <div class="header-btn">
+                <a routerLink="Appointment" class="btn-quote" (click)="closeMobileMenu()">
+                    Book Appointment
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,427 @@
+.appointment {
+    padding: 80px 0;
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c4964;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #6c757d;
+            margin-top: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #2c4964;
+        font-size: 14px;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .validation-error {
+        margin-top: 4px;
+
+        small {
+            color: #dc3545;
+            font-size: 12px;
+            display: block;
+        }
+    }
+
+    /* Payment Options */
+    .payment-options {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 5px;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border: 2px solid #e0e6ed;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: #fff;
+        flex: 0 0 auto;
+        min-width: 180px;
+
+        &:hover {
+            border-color: #1977cc;
+            background: #f8fbff;
+        }
+
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1977cc;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .payment-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+            color: #2c4964;
+
+            i {
+                font-size: 18px;
+                color: #1977cc;
+            }
+
+            .badge {
+                font-size: 11px;
+                padding: 3px 10px;
+                background: #28a745;
+                color: #fff;
+                border-radius: 20px;
+                font-weight: 500;
+            }
+        }
+
+        &:has(input:checked) {
+            border-color: #1977cc;
+            background: #e8f0fe;
+            box-shadow: 0 0 0 3px rgba(25, 119, 204, 0.1);
+        }
+    }
+
+    /* Payment Details */
+    .payment-details {
+        background: #f8faff;
+        border: 1px solid #e0e6ed;
+        border-radius: 10px;
+        padding: 20px 25px;
+
+        h5 {
+            color: #2c4964;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            i {
+                color: #1977cc;
+                font-size: 20px;
+            }
+        }
+
+        p {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 28px;
+            color: #2c4964;
+            margin-bottom: 12px;
+
+            i {
+                opacity: 0.7;
+                transition: opacity 0.3s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .alert-info {
+            background: #e8f0fe;
+            border-color: #c5d9f7;
+            color: #1977cc;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            i {
+                font-size: 18px;
+            }
+        }
+    }
+
+    /* Status Messages */
+    .loading,
+    .error-message,
+    .sent-message {
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .loading {
+        background: #e8f0fe;
+        color: #1977cc;
+        border: 1px solid #c5d9f7;
+    }
+
+    .error-message {
+        background: #fde8e8;
+        color: #dc3545;
+        border: 1px solid #f5c2c2;
+    }
+
+    .sent-message {
+        background: #e8f5e9;
+        color: #28a745;
+        border: 1px solid #c3e6cb;
+    }
+
+    /* Appointment Button */
+    .btn-appointment {
+        background: #1977cc;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 14px 45px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        &:hover:not(:disabled) {
+            background: #1a86e0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(25, 119, 204, 0.3);
+        }
+
+        &:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        i {
+            font-size: 18px;
+        }
+
+        .spinner-border {
+            width: 16px;
+            height: 16px;
+            border-width: 2px;
+        }
+    }
+
+    &.light-background {
+        background: #f3f8fc;
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+        .payment-options {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .payment-option {
+            min-width: auto;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 767px) {
+        padding: 56px 23px;
+        .section-title {
+            h2 {
+                font-size: 26px;
+            }
+        }
+
+        .btn-appointment {
+            padding: 12px 30px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .payment-details {
+            padding: 15px 18px;
+
+            .payment-icons {
+                font-size: 22px;
+                gap: 12px;
+            }
+        }
+    }
+
+    @media (max-width: 576px) {
+        .section-title {
+            h2 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+
+        .form-label {
+            font-size: 13px;
+        }
+    }
+}
+.appointment {
+    animation: fadeInUp 0.6s ease;
+}
+.btn-primary {
+  background-color: var(--blue-color) !important;
+  border-radius: 6px !important;
+  padding: 10px 20px 10px 20px !important;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 0px;
+    padding: .4375rem 1.125rem;
+    font-size: .8125rem;
+    line-height: 1.25rem;
+    border-radius: 4px;
+}
+
+
+
+
+/* appointment.css - Add these styles */
+
+.appointment-success {
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border-left: 5px solid #28a745;
+    background: #f0fdf4;
+    animation: slideDown 0.5s ease;
+}
+
+.appointment-success h4 {
+    color: #28a745;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.appointment-success p {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.appointment-success .badge {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.appointment-success .btn-lg {
+    padding: 12px 40px;
+    font-size: 16px;
+    border-radius: 50px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loading {
+    background: #e8f0fe;
+    color: #1977cc;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    border: 1px solid #c5d9f7;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .appointment-success {
+        padding: 15px 20px;
+    }
+    
+    .appointment-success .btn-lg {
+        padding: 10px 25px;
+        font-size: 14px;
+        width: 100%;
+    }
+}

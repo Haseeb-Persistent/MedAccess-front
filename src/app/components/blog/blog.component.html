@@ -1,0 +1,24 @@
+<!-- ====== BLOG / IVF INFO SECTION ====== -->
+<section class="blog-section global-section">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-head text-center">
+            <h2>Our <span>Blogs</span></h2>
+            <p>Explore the latest advancements in AI-powered fertility treatments and reproductive technologies.</p>
+        </div>
+
+        <!-- Blog Cards Grid -->
+        <div class="blog-grid">
+            <div class="blog-card" *ngFor="let blog of blogs">
+                <div class="blog-icon" [style.background]="blog.lightColor" [style.color]="blog.color">
+                    <i [class]="blog.icon"></i>
+                </div>
+                <h3 class="blog-title">{{ blog.title }}</h3>
+                <p class="blog-description">{{ blog.description }}</p>
+                <a href="#" class="blog-read-more">
+                    Read More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
