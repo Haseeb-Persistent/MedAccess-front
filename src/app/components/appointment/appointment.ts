@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AppointmentService, AppointmentResponse, ApiResponse } from './../../services/appointment.service';
+import { AppointmentService, AppointmentResponse, ApiResponse, ServiceDto } from './../../services/appointment.service';
 
 declare var Stripe: any;
 
@@ -22,7 +22,7 @@ export class AppointmentComponent implements OnInit {
     email: '',
     country: '',
     city: '',
-    service: '',
+    service: '', // This will be the ServiceName from API
     doctor: '',
     appointmentDate: '',
     appointmentTime: '',
@@ -58,16 +58,8 @@ export class AppointmentComponent implements OnInit {
     { id: 12, name: 'Vancouver', country: 'Canada' }
   ];
 
-  services = [
-    { id: 1, name: 'IUI (Intrauterine Insemination)' },
-    { id: 2, name: 'IVF (In Vitro Fertilization)' },
-    { id: 3, name: 'ICSI (Intracytoplasmic Sperm Injection)' },
-    { id: 4, name: 'Egg Freezing' },
-    { id: 5, name: 'Embryo Transfer' },
-    { id: 6, name: 'Fertility Preservation' },
-    { id: 7, name: 'Genetic Testing' },
-    { id: 8, name: 'Surrogacy' }
-  ];
+  // Services loaded from API - DYNAMIC!
+  services: ServiceDto[] = [];
 
   doctors = [
     { id: 1, name: 'Dr. Ahmed', service: 'IUI (Intrauterine Insemination)' },
@@ -93,6 +85,7 @@ export class AppointmentComponent implements OnInit {
   stripe: any = null;
   stripePublishableKey = 'pk_test_51TzAo7RuXfnsrTjgaQN9PMwhuSEtNCRgAvhhLn9WXwuAc6KzFgULT2rUEDhh1qa6yOY0bmxk7inyq1nyFVpd6UYo00mhzBStng';
   redirectUrl: string | null = null;
+  isLoadingServices = false;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -105,8 +98,35 @@ export class AppointmentComponent implements OnInit {
     this.filteredDoctors = this.doctors;
     this.filteredCities = this.cities;
 
+    // Load services from API
+    await this.loadServices();
+
     // Initialize Stripe
     this.stripe = Stripe(this.stripePublishableKey);
+  }
+
+  // ============================================
+  // LOAD SERVICES FROM API
+  // ============================================
+  async loadServices(): Promise<void> {
+    this.isLoadingServices = true;
+    try {
+      const result = await this.appointmentService.getServices().toPromise();
+      console.log('Services API Response:', result);
+      
+      if (result?.success && result.data) {
+        this.services = result.data;
+        console.log('Services loaded from API:', this.services);
+      } else {
+        console.error('Failed to load services:', result?.error);
+        // You can show an error message to the user
+      }
+    } catch (error) {
+      console.error('Error loading services:', error);
+      // You can show an error message to the user
+    } finally {
+      this.isLoadingServices = false;
+    }
   }
 
   onCountryChange(): void {

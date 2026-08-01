@@ -1,16 +1,24 @@
-// appointment.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
+
+export interface ServiceDto {
+    serviceId: number;
+    serviceName: string;
+    consultationFee: number;
+    currency: string;
+    description?: string;
+    isActive: boolean;
+}
 
 export interface CreateAppointmentRequest {
-    patientName: string;    // <-- Changed from fullName
-    mobile: string;         // <-- Changed from mobileNumber
+    patientName: string;
+    mobile: string;
     email: string;
     country: string;
     city: string;
-    service: string;
+    service: string; // ServiceName - sent to API
     doctor: string;
     appointmentDate: string;
     appointmentTime: string;
@@ -38,14 +46,6 @@ export interface ApiResponse<T> {
     error?: string;
 }
 
-export interface CheckoutSessionResponse {
-    success: boolean;
-    message: string;
-    data: {
-        redirectUrl: string;
-    };
-}
-
 @Injectable({
     providedIn: 'root'
 })
@@ -61,16 +61,26 @@ export class AppointmentService {
         });
     }
 
-    // Book Appointment - Maps frontend fields to API expected fields
+    // Get all services from API
+    getServices(): Observable<ApiResponse<ServiceDto[]>> {
+        return this.http.get<ApiResponse<ServiceDto[]>>(
+            `${this.apiUrl}/Service`,
+            { headers: this.getHeaders() }
+        ).pipe(
+            timeout(30000),
+            catchError(this.handleError)
+        );
+    }
+
+    // Book Appointment - Sends service name, NOT fee
     bookAppointment(data: any): Observable<ApiResponse<AppointmentResponse>> {
-        // Map frontend field names to API expected field names
         const requestData: CreateAppointmentRequest = {
-            patientName: data.fullName,        // Map fullName -> patientName
-            mobile: data.mobileNumber,          // Map mobileNumber -> mobile
+            patientName: data.fullName,
+            mobile: data.mobileNumber,
             email: data.email,
             country: data.country,
             city: data.city,
-            service: data.service,
+            service: data.service, // Only service name - NO FEE!
             doctor: data.doctor,
             appointmentDate: data.appointmentDate,
             appointmentTime: data.appointmentTime,
@@ -85,10 +95,7 @@ export class AppointmentService {
             requestData,
             { headers: this.getHeaders() }
         ).pipe(
-            map(response => {
-                console.log('API Response:', response);
-                return response;
-            }),
+            timeout(30000),
             catchError(this.handleError)
         );
     }
@@ -100,11 +107,12 @@ export class AppointmentService {
             { appointmentId },
             { headers: this.getHeaders() }
         ).pipe(
+            timeout(30000),
             catchError(this.handleError)
         );
     }
 
-    // Get Appointment by Number
+    // Get Appointment
     getAppointment(appointmentNumber: string): Observable<ApiResponse<AppointmentResponse>> {
         return this.http.get<ApiResponse<AppointmentResponse>>(
             `${this.apiUrl}/Appointment/${appointmentNumber}`,
@@ -114,7 +122,7 @@ export class AppointmentService {
         );
     }
 
-    // Get Appointment Payment Status
+    // Get Payment Status
     getPaymentStatus(appointmentNumber: string): Observable<ApiResponse<AppointmentResponse>> {
         return this.http.get<ApiResponse<AppointmentResponse>>(
             `${this.apiUrl}/Payment/${appointmentNumber}/payment-status`,
@@ -136,6 +144,7 @@ export class AppointmentService {
 
     private handleError(error: any): Observable<never> {
         console.error('API Error:', error);
+        
         let errorMessage = 'An error occurred. Please try again.';
         
         if (error.error?.error) {
