@@ -1,12 +1,5 @@
 <!-- components/whatsapp-button/whatsapp-button.component.html -->
 <div class="whatsapp-container" [class.bottom-left]="position === 'bottom-left'" [class.bottom-right]="position === 'bottom-right'">
-    <!-- Tooltip -->
-    <div class="whatsapp-tooltip" *ngIf="showTooltip">
-        <span class="tooltip-text">{{ tooltipText }}</span>
-        <span class="tooltip-arrow"></span>
-    </div>
-    
-    <!-- WhatsApp Button -->
     <button class="whatsapp-button" (click)="openWhatsApp()" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </button>
