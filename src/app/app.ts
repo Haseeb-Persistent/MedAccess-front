@@ -5,10 +5,11 @@ import { ModalComponent } from "./components/modal/modal.component";
 import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
 import { WhatsappButtonComponent } from "./components/whatsapp-button/whatsapp-button.component";
+import { ChatbotComponent } from "./components/chatbot/chatbot.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ModalComponent, Header, Footer, HttpClientModule, WhatsappButtonComponent],
+  imports: [RouterOutlet, ModalComponent, Header, Footer, HttpClientModule, WhatsappButtonComponent, ChatbotComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

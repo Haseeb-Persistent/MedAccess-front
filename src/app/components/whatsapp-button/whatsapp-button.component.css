@@ -6,7 +6,7 @@
     gap: 12px;
 
     &.bottom-right {
-        bottom: 100px;
+        bottom: 17px;
         right: 30px;
         flex-direction: row-reverse;
     }
@@ -104,7 +104,7 @@
 @media (max-width: 576px) {
     .whatsapp-container {
         &.bottom-right {
-            bottom: 70px;
+            bottom: 11px;
             right: 15px;
         }
 
