@@ -1,4 +1,22 @@
-<app-hero></app-hero>
-<app-services></app-services>
-<app-doctors></app-doctors>
-<app-success-count></app-success-count>
+<!-- home.component.html -->
+<div class="overflow-hidden">
+    <!-- Hero Section -->
+    <div data-aos="fade-right" data-aos-duration="1000">
+        <app-hero></app-hero>
+    </div>
+    
+    <!-- Services Section -->
+    <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+        <app-services></app-services>
+    </div>
+    
+    <!-- Doctors Section -->
+    <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+        <app-doctors></app-doctors>
+    </div>
+    
+    <!-- Success Count Section -->
+    <div data-aos="zoom-in" data-aos-duration="900" data-aos-delay="150">
+        <app-success-count></app-success-count>
+    </div>
+</div>
