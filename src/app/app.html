@@ -3,5 +3,12 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
+<app-whatsapp-button 
+    [phoneNumber]="whatsappNumber"
+    [message]="whatsappMessage"
+    position="bottom-right"
+    [showTooltip]="true"
+    tooltipText="Chat with us on WhatsApp">
+</app-whatsapp-button>
 
 
