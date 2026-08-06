@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -11,30 +11,24 @@ import { RouterModule } from '@angular/router';
 })
 export class Hero implements OnInit, OnDestroy {
   currentSlide = 0;
-  autoplayInterval: any;
-  totalSlides = 3;
+  private autoplayInterval: any;
+  private isPaused = false;
 
   slides = [
     {
-      id: 1,
-      title: "Pakistan's 1st<br>AI Based Fertility Centre",
-      description: 'Experience compassionate, AI-powered fertility care tailored to your journey. Advanced IVF, ICSI, IUI, and reproductive treatments under one roof. Helping you achieve the dream of parenthood with confidence and care.',
-      VideoFrame: 'https://themedaccess.com/assets/video/IVF%20video-1.mp4',
+      title: 'Welcome to <span class="highlight">MedAccess</span>',
+      description: 'Your trusted partner in fertility care.',
+      image: '/assets/img/ezgif-85b26bd9a39b4114.gif'
     },
     {
-      id: 2,
-      title: 'We provide<br>High Quality Service',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Viverra maecenas accumsan lacus vel facilisis.',
-            image: 'https://i.ibb.co/YFM8qX3x/curasol.jpg',
-
-      bgColor: '#1a2a6c'
+      title: 'AI‑Assisted <span class="highlight">IVF</span>',
+      description: 'Harness the power of artificial intelligence.',
+      image: '/assets/img/curasol2.jpeg'
     },
     {
-      id: 3,
-      title: 'Our Working Process<br>is Unique',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Viverra maecenas accumsan lacus vel facilisis.',
-      image: 'https://via.placeholder.com/1920x800/2a3a7c/ffffff?text=Slide+3',
-      bgColor: '#2a3a7c'
+      title: 'AI‑Assisted <span class="highlight">IVF</span>',
+      description: 'Harness the power of artificial intelligence.',
+      image: '/assets/img/curasol2.jpeg'
     }
   ];
 
@@ -43,9 +37,7 @@ export class Hero implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-    }
+    this.stopAutoplay();
   }
 
   startAutoplay(): void {
@@ -53,35 +45,46 @@ export class Hero implements OnInit, OnDestroy {
       clearInterval(this.autoplayInterval);
     }
     this.autoplayInterval = setInterval(() => {
-      this.nextSlide();
+      if (!this.isPaused) {
+        this.nextSlide();
+      }
     }, 5000);
   }
 
-  resetAutoplay(): void {
-    clearInterval(this.autoplayInterval);
-    this.startAutoplay();
+  stopAutoplay(): void {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    }
+  }
+
+  pauseAutoplay(): void {
+    this.isPaused = true;
+  }
+
+  resumeAutoplay(): void {
+    this.isPaused = false;
   }
 
   nextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
   }
 
   prevSlide(): void {
-    this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
   }
 
   goToSlide(index: number): void {
     this.currentSlide = index;
-    this.resetAutoplay();
   }
 
-  pauseAutoplay(): void {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-    }
+  @HostListener('mouseenter')
+  onMouseEnter(): void {
+    this.pauseAutoplay();
   }
 
-  resumeAutoplay(): void {
-    this.startAutoplay();
+  @HostListener('mouseleave')
+  onMouseLeave(): void {
+    this.resumeAutoplay();
   }
 }

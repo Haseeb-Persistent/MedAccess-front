@@ -2,59 +2,62 @@
 <section class="hero-section" 
          (mouseenter)="pauseAutoplay()" 
          (mouseleave)="resumeAutoplay()">
-    
-    <!-- Carousel Inner -->
-    <div class="carousel-inner">
-        <div class="carousel-item" 
-             *ngFor="let slide of slides; let i = index" 
-             [class.active]="i === currentSlide">
-            
-            <!-- Condition: If VideoFrame exists, show video, else show background image -->
-            <div class="hero-slide" 
-                 [style.background-image]="!slide.VideoFrame ? 'url(' + slide.image + ')' : 'none'"
-                 [style.background-color]="slide.bgColor">
-                
-                <!-- Video element (Only renders if VideoFrame exists) -->
-                <video *ngIf="slide.VideoFrame" 
-                       src="{{ slide.VideoFrame }}" 
-                       autoplay muted loop playsinline 
-                       class="background-video">
-                </video>
-
-                <!-- Overlay for text readability over Video and Image -->
-                <div class="hero-overlay">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 [innerHTML]="slide.title"></h1>
-                            <p>{{ slide.description }}</p>
-                            <div class="hero-buttons">
-                                <a href="#" class="btn-primary">Know More</a>
-                                <a href="#" class="btn-secondary">Get Started</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  
+  <div class="carousel-container">
+    <!-- Carousel Track -->
+    <div class="carousel-track" 
+         [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+      
+      <div class="carousel-slide" 
+           *ngFor="let slide of slides; let i = index"
+           [style.background-image]="'url(' + slide.image + ')'"
+           [style.background-size]="'cover'"
+           [style.background-position]="'center'">
+        
+        <!-- Multiple Overlay Layers for Shadow Effect -->
+        <div class="slide-overlay overlay-dark"></div>
+        <div class="slide-overlay overlay-gradient"></div>
+        <div class="slide-overlay overlay-shadow"></div>
+        
+        <div class="slide-content">
+          <div class="container">
+            <div class="hero-text">
+              <h1 [innerHTML]="slide.title"></h1>
+              <p>{{ slide.description }}</p>
+              <div class="hero-buttons">
+                <a href="#" class="btn btn-primary btn-hero">Know More</a>
+                <a href="#" class="btn btn-outline-light btn-hero">Get Started</a>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- Carousel Controls - Only Buttons -->
-    <button class="carousel-control-prev" (click)="prevSlide()">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+    <!-- Carousel Controls -->
+    <button class="carousel-control carousel-control-prev" (click)="prevSlide()">
+      <span class="control-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </span>
     </button>
-    <button class="carousel-control-next" (click)="nextSlide()">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+    <button class="carousel-control carousel-control-next" (click)="nextSlide()">
+      <span class="control-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </span>
     </button>
 
     <!-- Carousel Indicators -->
     <div class="carousel-indicators">
-        <button type="button" 
-                *ngFor="let slide of slides; let i = index"
-                [class.active]="i === currentSlide"
-                [attr.aria-label]="'Slide ' + (i + 1)"
-                (click)="goToSlide(i)">
-        </button>
+      <button *ngFor="let slide of slides; let i = index"
+              class="indicator"
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)"
+              [attr.aria-label]="'Slide ' + (i + 1)">
+      </button>
     </div>
+  </div>
 </section>
