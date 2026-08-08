@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class Doctors implements OnInit, OnDestroy {
   currentSlide = 0;
-  slidesPerView = 3;
+  slidesPerView = 1; // CHANGED: Always 1 doctor at a time
   totalSlides = 0;
   maxSlides = 0;
   autoplayInterval: any;
@@ -21,64 +21,28 @@ export class Doctors implements OnInit, OnDestroy {
       id: 1,
       name: 'Dr. John Smith',
       designation: 'Senior Fertility Specialist',
-      image: 'https://via.placeholder.com/300x300/4070F4/ffffff?text=Dr.+Smith',
+      image: 'assets/img/doctor 1.png',
       description: 'Over 15 years of experience in fertility treatments with a focus on personalized patient care.'
     },
     {
       id: 2,
       name: 'Dr. Marry',
       designation: 'Clinical Embryologist',
-      image: 'https://via.placeholder.com/300x300/1a2a6c/ffffff?text=Dr.+Marry',
+      image: 'assets/img/doctor 2.png',
       description: 'Expert in embryo culture and selection with advanced laboratory techniques.'
     },
     {
       id: 3,
       name: 'Dr. James',
       designation: 'IVF Consultant',
-      image: 'https://via.placeholder.com/300x300/2a3a7c/ffffff?text=Dr.+James',
+      image: 'assets/img/doctor 3.png',
       description: 'Specialized in complex IVF cases and recurrent implantation failure.'
-    },
-    {
-      id: 4,
-      name: 'Eve',
-      designation: 'Patient Care Coordinator',
-      image: 'https://via.placeholder.com/300x300/3a4a8c/ffffff?text=Eve',
-      description: 'Dedicated to providing compassionate support throughout your fertility journey.'
-    },
-    {
-      id: 5,
-      name: 'Dr. Sarah',
-      designation: 'Reproductive Endocrinologist',
-      image: 'https://via.placeholder.com/300x300/4a5a9c/ffffff?text=Dr.+Sarah',
-      description: 'Expert in hormonal treatments and reproductive medicine.'
-    },
-    {
-      id: 6,
-      name: 'Dr. David',
-      designation: 'Andrologist',
-      image: 'https://via.placeholder.com/300x300/5a6aac/ffffff?text=Dr.+David',
-      description: 'Specialized in male fertility and reproductive health.'
-    },
-    {
-      id: 7,
-      name: 'Dr. Emily',
-      designation: 'Genetic Counselor',
-      image: 'https://via.placeholder.com/300x300/6a7abc/ffffff?text=Dr.+Emily',
-      description: 'Provides genetic counseling and screening for fertility patients.'
-    },
-    {
-      id: 8,
-      name: 'Dr. Michael',
-      designation: 'Reproductive Surgeon',
-      image: 'https://via.placeholder.com/300x300/7a8acc/ffffff?text=Dr.+Michael',
-      description: 'Specialized in minimally invasive reproductive surgery.'
     }
   ];
 
   constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
-    this.updateSlidesPerView();
     this.totalSlides = this.doctors.length;
     this.maxSlides = this.totalSlides - this.slidesPerView;
   }
@@ -92,37 +56,23 @@ export class Doctors implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize(): void {
-    this.updateSlidesPerView();
-    this.maxSlides = this.totalSlides - this.slidesPerView;
-    if (this.currentSlide > this.maxSlides) {
-      this.currentSlide = Math.max(0, this.maxSlides);
-    }
+    // No need to change slidesPerView. Always 1.
     this.updateSliderPosition();
-  }
-
-  updateSlidesPerView(): void {
-    const width = window.innerWidth;
-    if (width < 768) {
-      this.slidesPerView = 1;
-    } else {
-      this.slidesPerView = 3;
-    }
-    this.maxSlides = this.totalSlides - this.slidesPerView;
   }
 
   getSlideWidth(): number {
     const container = this.el.nativeElement.querySelector('.slide-container');
     if (container) {
-      const containerWidth = container.offsetWidth - 80;
-      const gap = 30;
-      return (containerWidth - (this.slidesPerView - 1) * gap) / this.slidesPerView;
+      // Adjusted for 1 card view
+      const containerWidth = container.offsetWidth - 80; 
+      return containerWidth;
     }
-    return 300;
+    return 400;
   }
 
   getTransformValue(): string {
     const slideWidth = this.getSlideWidth();
-    const gap = 30;
+    const gap = 30; // Gap between cards (though invisible since we only show 1)
     const translateX = -this.currentSlide * (slideWidth + gap);
     return `translateX(${translateX}px)`;
   }
@@ -131,7 +81,7 @@ export class Doctors implements OnInit, OnDestroy {
     const wrapper = this.el.nativeElement.querySelector('.card-wrapper');
     if (wrapper) {
       wrapper.style.transform = this.getTransformValue();
-      wrapper.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      wrapper.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     }
     this.updateDots();
   }
@@ -140,7 +90,7 @@ export class Doctors implements OnInit, OnDestroy {
     if (this.currentSlide < this.maxSlides) {
       this.currentSlide++;
     } else {
-      this.currentSlide = 0;
+      this.currentSlide = 0; // Loop back to the first doctor
     }
     this.updateSliderPosition();
     this.resetAutoplay();
@@ -150,7 +100,7 @@ export class Doctors implements OnInit, OnDestroy {
     if (this.currentSlide > 0) {
       this.currentSlide--;
     } else {
-      this.currentSlide = this.maxSlides;
+      this.currentSlide = this.maxSlides; // Loop to the last doctor
     }
     this.updateSliderPosition();
     this.resetAutoplay();
@@ -175,9 +125,7 @@ export class Doctors implements OnInit, OnDestroy {
 
   // ===== AUTO PLAY =====
   startAutoplay(): void {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-    }
+    if (this.autoplayInterval) clearInterval(this.autoplayInterval);
     this.autoplayInterval = setInterval(() => {
       this.nextSlide();
     }, 4000);
@@ -189,9 +137,7 @@ export class Doctors implements OnInit, OnDestroy {
   }
 
   pauseAutoplay(): void {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-    }
+    if (this.autoplayInterval) clearInterval(this.autoplayInterval);
   }
 
   resumeAutoplay(): void {
@@ -199,8 +145,6 @@ export class Doctors implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-    }
+    if (this.autoplayInterval) clearInterval(this.autoplayInterval);
   }
 }

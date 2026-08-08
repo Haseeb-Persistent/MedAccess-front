@@ -3,7 +3,7 @@
     <div class="container">
         <!-- Section Header -->
         <div class="section-head text-center">
-            <h2>Our <span>Doctor</span></h2>
+            <h2>Meet Our <span>Specialists</span></h2>
             <p>Meet our dedicated team of fertility specialists, embryologists, and support staff committed to providing compassionate care throughout your journey.</p>
         </div>
 
@@ -16,16 +16,19 @@
                 <div class="card-wrapper">
                     <!-- Card Loop -->
                     <div class="card" *ngFor="let doctor of doctors">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img [src]="doctor.image" alt="{{ doctor.name }}" class="card-img">
-                            </div>
+                        <div class="doctor-frame">
+                            <img [src]="doctor.image" alt="{{ doctor.name }}" class="card-img">
                         </div>
                         <div class="card-content">
                             <h2 class="name">{{ doctor.name }}</h2>
                             <p class="designation">{{ doctor.designation }}</p>
                             <p class="description">{{ doctor.description }}</p>
+                            
+                            <!-- Social Links / Action (Optional) -->
+                            <div class="doctor-social">
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>

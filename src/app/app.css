@@ -1,0 +1,14 @@
+/* In your Global styles.css or component CSS */
+app-whatsapp-button {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999 !important; /* Forces it to sit above everything */
+}
+
+app-chatbot {
+    position: fixed !important;
+    bottom: 100px;
+    right: 20px;
+    z-index: 9998 !important;
+}

@@ -23,13 +23,12 @@ export class Hero implements OnInit, OnDestroy {
     {
       title: 'AI‑Assisted <span class="highlight">IVF</span>',
       description: 'Harness the power of artificial intelligence.',
-      image: '/assets/img/curasol2.jpeg'
+      image: '/assets/img/TEAM2.jpeg'
     },
     {
       title: 'AI‑Assisted <span class="highlight">IVF</span>',
       description: 'Harness the power of artificial intelligence.',
-      image: '/assets/img/curasol2.jpeg'
-    }
+      image: '/assets/img/TEAM1.jpeg'    }
   ];
 
   ngOnInit(): void {
