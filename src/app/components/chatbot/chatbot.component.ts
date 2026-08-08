@@ -14,8 +14,8 @@ import { ChatbotService, ChatMessage } from '../../services/chatbot.service';
 export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() position: 'bottom-right' | 'bottom-left' = 'bottom-right';
   @Input() botName: string = 'MedAccess AI Assistant';
-  @Input() botAvatar: string = 'assets/images/bot-avatar.png';
-  @Input() userAvatar: string = 'assets/images/user-avatar.png';
+  @Input() botAvatar: string = '/assets/img/chatbotlogo.png';
+  @Input() userAvatar: string = '/assets/img.user-avatar.png';
   
   isOpen: boolean = false;
   isMinimized: boolean = false;

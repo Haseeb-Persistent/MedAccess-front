@@ -1,4 +1,3 @@
-<!-- components/chatbot/chatbot.component.html -->
 <div class="chatbot-container" [class.open]="isOpen" [class.minimized]="isMinimized" 
      [class.bottom-right]="position === 'bottom-right'" 
      [class.bottom-left]="position === 'bottom-left'">
@@ -7,7 +6,6 @@
     <button class="chat-toggle" *ngIf="!isOpen" (click)="toggleChat()" aria-label="Open Chat">
         <i class="fas fa-comment-dots"></i>
         <span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
-        <span class="pulse-ring"></span>
     </button>
 
     <!-- Chat Window -->

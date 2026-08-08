@@ -1,14 +1,33 @@
-/* In your Global styles.css or component CSS */
+/* ===== GLOBAL FLOATING FIX ===== */
 app-whatsapp-button {
     position: fixed !important;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999 !important; /* Forces it to sit above everything */
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 99999 !important; /* Highest possible z-index */
+    display: block !important;
 }
 
 app-chatbot {
     position: fixed !important;
-    bottom: 100px;
-    right: 20px;
-    z-index: 9998 !important;
+    bottom: 90px !important;
+    right: 20px !important;
+    z-index: 99998 !important;
+    display: block !important;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 768px) {
+    app-whatsapp-button {
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    app-chatbot {
+        bottom: 80px !important;
+        right: 15px !important;
+    }
+}
+
+/* Ensure no Bootstrap/Animations override the fixed positioning */
+router-outlet, app-header, app-footer, div {
+    position: relative; /* Ensures fixed elements stay above them */
 }

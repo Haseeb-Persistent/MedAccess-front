@@ -1,126 +1,84 @@
+/* ===== WHATSAPP BUTTON ===== */
 .whatsapp-container {
-    position: fixed;
-    z-index: 9999;
+    position: fixed !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Desktop Positioning --- */
+.whatsapp-container.bottom-right {
+    bottom: 20px !important;
+    right: 25px !important;
+}
+
+.whatsapp-container.bottom-left {
+    bottom: 20px !important;
+    left: 25px !important;
+}
+
+/* --- The Button Itself --- */
+.whatsapp-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #25D366;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
     display: flex;
     align-items: center;
-    gap: 12px;
-
-    &.bottom-right {
-        bottom: 17px;
-        right: 30px;
-        flex-direction: row-reverse;
-    }
-
-    &.bottom-left {
-        bottom: 100px;
-        left: 30px;
-        flex-direction: row;
-    }
-
-    .whatsapp-button {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: #25D366;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-
-        i {
-            font-size: 32px;
-            color: #ffffff;
-            transition: transform 0.3s ease;
-        }
-        &:active {
-            transform: scale(0.95);
-        }
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 50%;
-            background: rgba(37, 211, 102, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-            z-index: -1;
-        }
-    }
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
+.whatsapp-button i {
+    font-size: 34px;
+    color: #ffffff;
 }
 
-@keyframes fadeInTooltip {
-    from {
-        opacity: 0;
-        transform: translateY(10px) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+.whatsapp-button:active {
+    transform: scale(0.95);
+}
+
+/* ===========================================================
+   MOBILE RESPONSIVE POSITIONING (CRUCIAL FOR YOUR SCREENSHOT)
+   =========================================================== */
+@media (max-width: 991px) {
+    /* Tablets & Mobile */
+    .whatsapp-container.bottom-right {
+        bottom: 20px !important; 
+        right: 20px !important;
     }
 }
 
 @media (max-width: 768px) {
-    .whatsapp-container {
-        &.bottom-right {
-            bottom: 80px;
-            right: 20px;
-        }
-
-        &.bottom-left {
-            bottom: 80px;
-            left: 20px;
-        }
-
-        .whatsapp-button {
-            width: 55px;
-            height: 55px;
-
-            i {
-                font-size: 28px;
-            }
-        }
-
+    .whatsapp-container.bottom-right {
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    
+    .whatsapp-button {
+        width: 54px;
+        height: 54px;
+    }
+    .whatsapp-button i {
+        font-size: 30px;
     }
 }
 
 @media (max-width: 576px) {
-    .whatsapp-container {
-        &.bottom-right {
-            bottom: 11px;
-            right: 15px;
-        }
+    .whatsapp-container.bottom-right {
+        bottom: 20px !important; /* Keeps it safe above the phone navigation bar */
+        right: 15px !important;
+    }
 
-        &.bottom-left {
-            bottom: 70px;
-            left: 15px;
-        }
-
-        .whatsapp-button {
-            width: 50px;
-            height: 50px;
-
-            i {
-                font-size: 24px;
-            }
-        }
-
+    .whatsapp-button {
+        width: 50px;
+        height: 50px;
+    }
+    .whatsapp-button i {
+        font-size: 28px;
     }
 }

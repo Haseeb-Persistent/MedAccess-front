@@ -1,20 +1,21 @@
-
 <!-- <app-modal></app-modal> -->
- <div data-aos="zoom-in" data-aos-duration="1000">
  
-<app-header ></app-header>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
-<app-whatsapp-button 
-    [phoneNumber]="whatsappNumber"
-    [message]="whatsappMessage"
-    position="bottom-right"
-    [showTooltip]="true"
-    tooltipText="Chat with us on WhatsApp">
-</app-whatsapp-button>
-<app-chatbot 
-    position="bottom-right"
-    botName="MedAccess AI Assistant">
-</app-chatbot>
-
- </div>
+<!-- REMOVED: data-aos="zoom-in" data-aos-duration="1000" -->
+<div>
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+    
+    <app-whatsapp-button 
+        [phoneNumber]="whatsappNumber"
+        [message]="whatsappMessage"
+        position="bottom-right"
+        [showTooltip]="true"
+        tooltipText="Chat with us on WhatsApp">
+    </app-whatsapp-button>
+    
+    <app-chatbot 
+        position="bottom-right"
+        botName="MedAccess AI Assistant">
+    </app-chatbot>
+</div>
