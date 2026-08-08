@@ -1,0 +1,83 @@
+<section class="service-footer-stats-section" data-aos="fade-up">
+    <div class="container">
+
+        <!-- Header Text -->
+        <div *ngIf="data.statsIntroText" class="intro-text text-center mb-5">
+            <p>{{ data.statsIntroText }}</p>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="row text-center stats-row">
+            <div class="col-md-4 stat-box" *ngFor="let stat of data.stats">
+                <h3>{{ stat.value }}</h3>
+                <p>{{ stat.label }}</p>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="ivf-faq-section mt-5">
+            <h2 class="ivf-faq-heading text-center">Gender Selection – Frequently Asked Questions</h2>
+            <div [attr.id]="data.accordionId" class="ivf-accordion">
+
+                <div class="ivf-item" *ngFor="let faq of data.faqs; let i = index">
+                    <button aria-expanded="false" class="ivf-question">
+                        {{ i + 1 }}. {{ faq.question }}
+                        <span class="chev">+</span>
+                    </button>
+                    <div class="ivf-answer">
+                        <p>{{ faq.answer }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+     <section class="partners-section">
+    <div class="container">
+        <div class="partners-header" data-aos="fade-up">
+            <h2>Trusted by our partners who <span class="highlight">revolutionize IVF</span></h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="partners-grid" data-aos="fade-up" data-aos-delay="100">
+            
+            <!-- Partner 1 -->
+            <div class="partner-item">
+                <a href="#" target="_blank" class="partner-link">
+                    <img src="/assets/img/main-logo.png" alt="MedAccess">
+                </a>
+            </div>
+
+            <!-- Partner 2 -->
+            <div class="partner-item">
+                <a href="#" target="_blank" class="partner-link">
+                    <img src="https://aivf.co/wp-content/uploads/2024/01/AIVF-Soft-Black-RGB.png" alt="AIVF">
+                </a>
+            </div>
+
+            <!-- Partner 3 -->
+            <div class="partner-item">
+                <a href="#" target="_blank" class="partner-link">
+                    <img src="https://www.indiraivf.com/sites/default/files/indiraivf-logo.png" alt="Indira IVF">
+                </a>
+            </div>
+
+            <!-- Partner 4 -->
+            <div class="partner-item">
+                <a href="#" target="_blank" class="partner-link">
+                    <img src="https://www.indiaopd.com/img/logo.png" alt="IndiaOPD">
+                </a>
+            </div>
+
+            <!-- Partner 5 -->
+            <div class="partner-item">
+                <a href="#" target="_blank" class="partner-link">
+                    <img src="/assets/img/parnter logo.png" alt="Partner Logo">
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+    </div>
+</section>
