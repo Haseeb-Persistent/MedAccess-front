@@ -23,10 +23,10 @@
             <div class="col-lg-5 col-md-6">
                 <div class="header-social">
                     <ul>
-                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a ><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a ><i class="fa-brands fa-twitter"></i></a></li>
+                        <li><a ><i class="fa-brands fa-linkedin-in"></i></a></li>
+                        <li><a ><i class="fa-brands fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -38,7 +38,7 @@
 <nav class="navbar navbar-expand-lg main-navbar" id="mainNavbarWrapper">
     <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand logo" href="#">
+        <a class="navbar-brand logo" >
             <img src="https://i.ibb.co/mF9n3Dn4/New-Med-Access-LOGO.png" alt="Logo">
         </a>
 
@@ -59,7 +59,7 @@
             <ul class="navbar-nav mx-auto">
                 <!-- Home Link -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#" (click)="closeMobileMenu()">Home</a>
+                    <a routerLink="MEDACCESS" class="nav-link"  (click)="closeMobileMenu()">Home</a>
                 </li>
 
                 <li class="nav-item">
@@ -68,7 +68,7 @@
 
                 <!-- Services Dropdown -->
                 <li class="nav-item dropdown" [class.show]="activeDropdown === 'services'">
-                    <a class="nav-link dropdown-toggle" href="#" (click)="toggleDropdown($event, 'services')">
+                    <a class="nav-link dropdown-toggle"  (click)="toggleDropdown($event, 'services')">
                         Services <i class="fa-solid fa-chevron-down"></i>
                     </a>
                     <ul class="dropdown-menu" [class.show]="activeDropdown === 'services'">

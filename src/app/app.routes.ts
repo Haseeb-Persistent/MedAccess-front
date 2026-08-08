@@ -11,14 +11,17 @@ import { Services } from './components/services/services';
 import { ServiceRoute } from './components/SERVICE_MODULE/service.route';
 
 export const routes: Routes = [
-     { path: '', component: Home },
+     // Fixed: Removed the leading '/' so it correctly matches the empty root path
+     { path: 'MEDACCESS', component: Home }, 
+     
      { path: 'Contact-Us', component: Contact },
      { path: 'Appointment', component: AppointmentComponent },
      { path: 'Blog', component: BlogComponent },
      { path: 'About-Us', component: About },
-        { path: 'payment/:appointmentNumber', component: PaymentComponent }, // Payment page
-        { path: 'IVF-VS-AI-IVF', component: IvfVsAiComponent }, 
-        ...ServiceRoute,
-    // { path: 'payment-success', component: PaymentSuccessComponent },
-  { path: '**', redirectTo: '' }
+     { path: 'payment/:appointmentNumber', component: PaymentComponent }, 
+     { path: 'IVF-VS-AI-IVF', component: IvfVsAiComponent }, 
+     
+     ...ServiceRoute,
+
+     { path: '**', redirectTo: 'MEDACCESS' }
 ];
