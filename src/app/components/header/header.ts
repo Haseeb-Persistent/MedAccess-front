@@ -41,15 +41,26 @@ export class Header implements OnInit {
     }
   }
 
+  // ***** NEW: Handle dropdown link clicks cleanly *****
+  onDropdownLinkClick(event: Event): void {
+    event.stopPropagation(); // Stop the click from bubbling up to the parent 'dropdown' li
+    
+    // Force close everything immediately
+    this.activeDropdown = null;
+    this.isMobileMenuOpen = false;
+    document.body.style.overflow = '';
+  }
+
   // Toggle dropdown
   toggleDropdown(event: Event, name: string): void {
-    event.preventDefault();
-    event.stopPropagation();
+    // Prevent the link from actually navigating when clicking the toggle
+    event.preventDefault(); 
     
     if (this.isMobile) {
+      // On mobile: toggle the dropdown open/closed
       this.activeDropdown = this.activeDropdown === name ? null : name;
     } else {
-      // Desktop: use hover, but toggle if clicked
+      // On desktop: toggle if clicked
       this.activeDropdown = this.activeDropdown === name ? null : name;
     }
   }

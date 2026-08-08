@@ -57,8 +57,8 @@
             </button>
 
             <ul class="navbar-nav mx-auto">
-                <!-- Home Dropdown -->
-                 <li class="nav-item">
+                <!-- Home Link -->
+                <li class="nav-item">
                     <a class="nav-link" href="#" (click)="closeMobileMenu()">Home</a>
                 </li>
 
@@ -72,38 +72,37 @@
                         Services <i class="fa-solid fa-chevron-down"></i>
                     </a>
                     <ul class="dropdown-menu" [class.show]="activeDropdown === 'services'">
-                        <li><a routerLink="AI-IVF"  class="dropdown-item"  (click)="closeMobileMenu()">Ai-IVF</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="AI-ICSi" class="dropdown-item" (click)="closeMobileMenu()">Ai-ICSI</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="AI-IVM" class="dropdown-item" (click)="closeMobileMenu()">Ai-IVM</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="AI-IUI" class="dropdown-item" (click)="closeMobileMenu()">Ai-IUI</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="Egg-Pooling" class="dropdown-item" (click)="closeMobileMenu()">AI-Egg Pooling</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="Stem-Cell-Rejuvenation" class="dropdown-item" (click)="closeMobileMenu()">AI-Stem Cell Ovarian Rejuvenation</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="AI-Stem-Cell-ED" class="dropdown-item" (click)="closeMobileMenu()">AI-Stem Cell E.D</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="AI-Egg-Freezing" class="dropdown-item" (click)="closeMobileMenu()">AI-Egg Freezing</a></li> <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a routerLink="AI-Gender-Selection" class="dropdown-item" (click)="closeMobileMenu()">AI-Gender Selection</a></li> <li>
-                        </li>
+                        <li><a routerLink="AI-IVF" class="dropdown-item" (click)="onDropdownLinkClick($event)">Ai-IVF</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="AI-ICSi" class="dropdown-item" (click)="onDropdownLinkClick($event)">Ai-ICSI</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="AI-IVM" class="dropdown-item" (click)="onDropdownLinkClick($event)">Ai-IVM</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="AI-IUI" class="dropdown-item" (click)="onDropdownLinkClick($event)">Ai-IUI</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="Egg-Pooling" class="dropdown-item" (click)="onDropdownLinkClick($event)">AI-Egg Pooling</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="Stem-Cell-Rejuvenation" class="dropdown-item" (click)="onDropdownLinkClick($event)">AI-Stem Cell Ovarian Rejuvenation</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="AI-Stem-Cell-ED" class="dropdown-item" (click)="onDropdownLinkClick($event)">AI-Stem Cell E.D</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="AI-Egg-Freezing" class="dropdown-item" (click)="onDropdownLinkClick($event)">AI-Egg Freezing</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><a routerLink="AI-Gender-Selection" class="dropdown-item" (click)="onDropdownLinkClick($event)">AI-Gender Selection</a></li>
                     </ul>
-                           <li class="nav-item">
-                    <a style="display: flex;" class="nav-link" routerLink="IVF-VS-AI-IVF" (click)="closeMobileMenu()">IVF vs AI-IVF</a>
                 </li>
-            
 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="IVF-VS-AI-IVF" (click)="closeMobileMenu()">IVF vs AI-IVF</a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" routerLink="Blog" (click)="closeMobileMenu()">Blog</a>
