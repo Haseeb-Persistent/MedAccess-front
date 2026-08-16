@@ -1,27 +1,66 @@
-<!-- ====== BLOG / IVF INFO SECTION ====== -->
- <div data-aos="zoom-in" data-aos-duration="1000">
-
-<section class="blog-section global-section">
+<!-- blog.component.html -->
+<!-- ====== BLOG SECTION WITH CAROUSEL - GREEN & BLUE THEME ====== -->
+<section class="blog-section">
     <div class="container">
         <!-- Section Header -->
         <div class="section-head text-center">
-            <h2>Our <span>Blogs</span></h2>
-            <p>Explore the latest advancements in AI-powered fertility treatments and reproductive technologies.</p>
+            <h2>Our <span>Blog</span></h2>
+            <p>Stay updated with the latest tips, news, and guides about car rentals and travel</p>
         </div>
 
-        <!-- Blog Cards Grid -->
-        <div class="blog-grid">
-            <div class="blog-card" *ngFor="let blog of blogs">
-                <div class="blog-icon" [style.background]="blog.lightColor" [style.color]="blog.color">
-                    <i [class]="blog.icon"></i>
+        <!-- Blog Carousel -->
+        <div class="blog-carousel-wrapper" 
+             (mouseenter)="pauseAutoplay()" 
+             (mouseleave)="resumeAutoplay()">
+            
+            <div class="blog-carousel-container">
+                <div class="blog-carousel-track" 
+                     [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+                    
+                    <div class="blog-carousel-slide" *ngFor="let slide of blogSlides">
+                        <div class="blog-grid">
+                            <div class="blog-card" *ngFor="let blog of slide">
+                                <div class="blog-image">
+                                    <img [src]="blog.image" [alt]="blog.title">
+                                    <div class="blog-date">
+                                        <span class="day">{{ blog.date | date: 'd' }}</span>
+                                        <span class="month">{{ blog.date | date: 'MMM' }}</span>
+                                    </div>
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-meta">
+                                        <span><i class="fas fa-user"></i> {{ blog.author }}</span>
+                                        <span><i class="fas fa-tag"></i> {{ blog.category }}</span>
+                                        <span><i class="fas fa-comment"></i> {{ blog.comments }}</span>
+                                    </div>
+                                    <h3 class="blog-title">{{ blog.title }}</h3>
+                                    <p class="blog-description">{{ blog.description }}</p>
+                                    <a [routerLink]="['/blog', blog.id]" class="blog-read-more">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="blog-title">{{ blog.title }}</h3>
-                <p class="blog-description">{{ blog.description }}</p>
-                <a href="#" class="blog-read-more">
-                    Read More <i class="fas fa-arrow-right"></i>
-                </a>
+
+                <!-- Carousel Controls -->
+                <button class="carousel-btn prev-btn" (click)="prevSlide()" aria-label="Previous">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next-btn" (click)="nextSlide()" aria-label="Next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+                <button *ngFor="let slide of blogSlides; let i = index"
+                        class="indicator-dot"
+                        [class.active]="i === currentSlide"
+                        (click)="goToSlide(i)">
+                </button>
             </div>
         </div>
     </div>
 </section>
- </div>

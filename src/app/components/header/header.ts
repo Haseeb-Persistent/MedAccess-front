@@ -1,6 +1,7 @@
-import { Component, OnInit, HostListener, ElementRef, Renderer2 } from '@angular/core';
+// header.component.ts
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,14 +12,11 @@ import { RouterModule } from '@angular/router';
 })
 export class Header implements OnInit {
   isMobileMenuOpen = false;
-  activeDropdown: string | null = null;
-  isMobile = false;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private el: ElementRef, private router: Router) {}
 
   ngOnInit(): void {
     this.initStickyHeader();
-    this.checkScreenSize();
   }
 
   // Toggle mobile menu
@@ -28,7 +26,6 @@ export class Header implements OnInit {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      this.activeDropdown = null;
     }
   }
 
@@ -37,60 +34,39 @@ export class Header implements OnInit {
     if (this.isMobileMenuOpen) {
       this.isMobileMenuOpen = false;
       document.body.style.overflow = '';
-      this.activeDropdown = null;
     }
   }
 
-  // ***** NEW: Handle dropdown link clicks cleanly *****
-  onDropdownLinkClick(event: Event): void {
-    event.stopPropagation(); // Stop the click from bubbling up to the parent 'dropdown' li
-    
-    // Force close everything immediately
-    this.activeDropdown = null;
-    this.isMobileMenuOpen = false;
-    document.body.style.overflow = '';
+  // Check if route is active (for .active class)
+  isActive(route: string): boolean {
+    return this.router.url === route;
   }
 
-  // Toggle dropdown
-  toggleDropdown(event: Event, name: string): void {
-    // Prevent the link from actually navigating when clicking the toggle
-    event.preventDefault(); 
-    
-    if (this.isMobile) {
-      // On mobile: toggle the dropdown open/closed
-      this.activeDropdown = this.activeDropdown === name ? null : name;
-    } else {
-      // On desktop: toggle if clicked
-      this.activeDropdown = this.activeDropdown === name ? null : name;
+  // Sticky header: white background on scroll
+  @HostListener('window:scroll', [])
+  initStickyHeader(): void {
+    const header = document.getElementById('ftco-navbar');
+    if (header) {
+      if (window.scrollY > 50) {
+        header.classList.add('header-scrolled');
+      } else {
+        header.classList.remove('header-scrolled');
+      }
     }
   }
 
-  // Check screen size
-  @HostListener('window:resize')
-  checkScreenSize(): void {
-    this.isMobile = window.innerWidth < 992;
-    if (!this.isMobile && this.isMobileMenuOpen) {
-      this.closeMobileMenu();
-    }
-  }
-
-  // Close mobile menu on ESC key
+  // Close mobile menu on ESC
   @HostListener('document:keydown.escape')
   onEscapeKey(): void {
     this.closeMobileMenu();
   }
 
-  // Close dropdowns when clicking outside
+  // Close mobile menu when clicking outside (on mobile)
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.dropdown') && !target.closest('.navbar-toggler')) {
-      this.activeDropdown = null;
-    }
-    
-    // Close mobile menu when clicking outside
     if (this.isMobileMenuOpen) {
-      const navbar = this.el.nativeElement.querySelector('#mainNavbar');
+      const target = event.target as HTMLElement;
+      const navbar = this.el.nativeElement.querySelector('#ftco-nav');
       const toggler = this.el.nativeElement.querySelector('.navbar-toggler');
       if (navbar && toggler) {
         if (!navbar.contains(target) && !toggler.contains(target)) {
@@ -100,16 +76,11 @@ export class Header implements OnInit {
     }
   }
 
-  // Sticky header on scroll
-  @HostListener('window:scroll', [])
-  initStickyHeader(): void {
-    const header = document.getElementById('mainNavbarWrapper');
-    if (header) {
-      if (window.scrollY > 100) {
-        header.classList.add('header-scrolled');
-      } else {
-        header.classList.remove('header-scrolled');
-      }
+  // On resize, if desktop, close mobile menu
+  @HostListener('window:resize')
+  onResize(): void {
+    if (window.innerWidth >= 992 && this.isMobileMenuOpen) {
+      this.closeMobileMenu();
     }
   }
 }

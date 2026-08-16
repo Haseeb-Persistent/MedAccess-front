@@ -1,0 +1,71 @@
+<!-- cars-section.component.html -->
+<!-- ====== CARS SECTION - GREEN & BLUE THEME ====== -->
+<section class="cars-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <div class="breadcrumb">
+        <a routerLink="/">HOME</a>
+        <span class="separator">></span>
+        <a routerLink="/cars">CARS</a>
+        <span class="separator">></span>
+        <span class="current">Choose Your Car</span>
+      </div>
+      <h2>Choose Your <span class="highlight">Car</span></h2>
+      <p>Select from our wide range of premium vehicles for your journey</p>
+    </div>
+
+    <!-- Cars Grid -->
+    <div class="cars-grid">
+      <div class="car-card" *ngFor="let car of cars">
+        <div class="car-image">
+          <img [src]="car.image" [alt]="car.name">
+          <div class="car-badge" *ngIf="car.badge">{{ car.badge }}</div>
+          <div class="car-actions">
+            <button class="action-btn" (click)="viewDetails(car)" title="View Details">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="action-btn favorite-btn" (click)="toggleFavorite(car)" [class.active]="car.isFavorite" title="Add to Favorites">
+              <i class="fas fa-heart"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="car-info">
+          <div class="car-header">
+            <h3>{{ car.name }}</h3>
+            <span class="car-type">{{ car.type }}</span>
+          </div>
+          
+          <div class="car-features">
+            <span *ngFor="let feature of car.features">
+              <i class="fas fa-check-circle"></i> {{ feature }}
+            </span>
+          </div>
+          
+          <div class="car-footer">
+            <div class="car-price">
+              <span class="price">${{ car.price }}</span>
+              <span class="per-day">/day</span>
+            </div>
+            <div class="car-buttons">
+              <button class="btn btn-book" (click)="bookNow(car)">
+                <i class="fas fa-calendar-check"></i> Book Now
+              </button>
+              <button class="btn btn-details" (click)="viewDetails(car)">
+                Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View All Button -->
+    <div class="view-all">
+      <button class="btn btn-view-all" routerLink="/vehicles">
+        View All Cars <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</section>

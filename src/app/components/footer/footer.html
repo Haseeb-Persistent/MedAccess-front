@@ -1,4 +1,5 @@
-<!-- ====== FOOTER SECTION ====== -->
+<!-- footer.component.html -->
+<!-- ====== FOOTER SECTION - GREEN & BLUE THEME ====== -->
 <footer class="footer-area">
     <div class="container">
         <div class="row">
@@ -6,14 +7,18 @@
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget">
                     <div class="logo">
-                        <a href="#">
-                            <img src="assets/img/main-logo.png" alt="Logo">
+                        <a routerLink="/">
+      <img src="/assets/img/main-logo.png" alt="" style="width: 120px;height: auto;">
                         </a>
                     </div>
-                    <p>أب كا حمل - Your trusted partner in fertility care. Advanced treatments with compassionate support.</p>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <div class="email">
                         <form class="newsletter-form" (ngSubmit)="onSubscribe()">
-                            <input type="email" placeholder="Enter Your Email" name="EMAIL" class="form-control" >
+                            <input type="email" placeholder="Enter Your Email" 
+                                   [(ngModel)]="email" 
+                                   name="EMAIL" 
+                                   class="form-control" 
+                                   required>
                             <button type="submit" class="default-btn">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -22,32 +27,30 @@
                 </div>
             </div>
 
-            <!-- Column 2: Services -->
+            <!-- Column 2: Information -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget pl-40">
-                    <h3>Services</h3>
+                    <h3>Information</h3>
                     <ul>
-                        <li><a href="#">IVF Treatment</a></li>
-                        <li><a href="#">IUI Procedure</a></li>
-                        <li><a href="#">ICSI Therapy</a></li>
-                        <li><a href="#">Gender Selection</a></li>
-                        <li><a href="#">PGT Testing</a></li>
-                        <li><a href="#">Fertility Preservation</a></li>
+                        <li><a routerLink="/about-us">About</a></li>
+                        <li><a routerLink="/services">Services</a></li>
+                        <li><a routerLink="/terms">Term and Conditions</a></li>
+                        <li><a routerLink="/price-guarantee">Best Price Guarantee</a></li>
+                        <li><a routerLink="/privacy">Privacy & Cookies Policy</a></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Column 3: Quick Links -->
+            <!-- Column 3: Customer Support -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget pl-40">
-                    <h3>Quick Links</h3>
+                    <h3>Customer Support</h3>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Fertility Specialist</a></li>
-                        <li><a href="#">What To Expect</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Testimonial</a></li>
+                        <li><a routerLink="/faq">FAQ</a></li>
+                        <li><a routerLink="/payment-options">Payment Option</a></li>
+                        <li><a routerLink="/booking-tips">Booking Tips</a></li>
+                        <li><a routerLink="/how-it-works">How it works</a></li>
+                        <li><a routerLink="/contact-us">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,28 +58,19 @@
             <!-- Column 4: Contact Info -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-widget">
-                    <h3>Contact Us</h3>
-                    <p class="find-text">Reach out to us for personalized fertility care and support.</p>
+                    <h3>Have a Questions?</h3>
                     <ul class="find-us">
                         <li>
-                            <i class="fas fa-phone-alt"></i>
-                            <a href="tel:03311114265">Helpline: 0331-1114265</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone-alt"></i>
-                            <a href="tel:0215297129">Karachi: 021-5297129</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone-alt"></i>
-                            <a href="tel:04235195115">Lahore: 042-35195115</a>
-                        </li>
-                        <li>
-                            <i class="fas fa-globe"></i>
-                            <a href="https://themedaccess.com">themedaccess.com</a>
-                        </li>
-                        <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>ZONE A, BLOCK 7, DEFENCE PHASE 7</span>
+                            <span>203 Fake St. Mountain View, San Francisco, California, USA</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+23923929210">+2 392 3929 210</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@yourdomain.com">info@yourdomain.com</a>
                         </li>
                     </ul>
                 </div>
@@ -101,7 +95,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="copyright-text text-end">
-                        <p>© <span id="year"></span> Themed Access. All Rights Reserved.</p>
+                        <p>Copyright © <span id="year"></span> All rights reserved | This template is made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by <a href="#" target="_blank">Colorlib</a></p>
                     </div>
                 </div>
             </div>

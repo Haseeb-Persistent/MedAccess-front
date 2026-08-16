@@ -1,13 +1,14 @@
-<!-- ====== CONTACT US PAGE ====== -->
- <div data-aos="zoom-in" data-aos-duration="1000">
+<!-- contact.component.html -->
+<!-- ====== CONTACT US PAGE - GREEN & BLUE THEME ====== -->
 
+<!-- Page Banner -->
 <section class="page-banner">
     <div class="container">
         <div class="banner-content">
             <h1>Contact <span>Us</span></h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
                 </ol>
             </nav>
@@ -15,7 +16,8 @@
     </div>
 </section>
 
-<section class="contact-section pt-100 pb-70 global-section">
+<!-- Contact Section -->
+<section class="contact-section">
     <div class="container">
         <!-- Contact Info Cards -->
         <div class="row">
@@ -24,8 +26,8 @@
                     <div class="contact-icon">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <h4>Our Location</h4>
-                    <p>F-57/1 Clifton Block 8,<br>Karachi, Pakistan</p>
+                    <h4>Address</h4>
+                    <p>Suite No. 106, 1st Floor, Clifton<br>Broadway Building, Clifton, Karachi<br>Postal Code: 75600, Pakistan</p>
                 </div>
             </div>
             
@@ -34,8 +36,8 @@
                     <div class="contact-icon">
                         <i class="fas fa-phone-alt"></i>
                     </div>
-                    <h4>Phone Number</h4>
-                    <p><a href="tel:02135297129">021-35297129</a><br><a href="tel:03311114265">0331-1114265</a></p>
+                    <h4>Call</h4>
+                    <p><a href="tel:00923000736859">0092 3000 RENTLY</a><br><a href="tel:00923000736859">0092 300 0736859</a></p>
                 </div>
             </div>
             
@@ -45,7 +47,7 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h4>Email Address</h4>
-                    <p><a href="mailto:info@themedaccess.com">info@themedaccess.com</a><br><a href="mailto:support@themedaccess.com">support@themedaccess.com</a></p>
+                    <p><a href="mailto:info@rently.com">info@rently.com</a><br><a href="mailto:support@rently.com">support@rently.com</a></p>
                 </div>
             </div>
             
@@ -65,44 +67,53 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="contact-form-wrapper">
-                        <h2>Send Us <span>A Message</span></h2>
-                        <p>Have questions about our fertility services? We're here to help. Reach out to us and our team will get back to you promptly.</p>
+                        <h2>Get In <span>Touch</span></h2>
+                        <p>Have questions about our car rental services? We're here to help. Reach out to us and our team will get back to you promptly.</p>
                         
-                        <form  class="contact-form">
+                        <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Your Name</label>
-                                        <input type="text" class="form-control" placeholder="John Doe"  name="name" required>
+                                        <label>Name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" placeholder="Your Name" 
+                                               [(ngModel)]="formData.name" name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Email Address</label>
-                                        <input type="email" class="form-control" placeholder="info@example.com"  name="email" required>
+                                        <label>Email Address <span class="required">*</span></label>
+                                        <input type="email" class="form-control" placeholder="info@example.com" 
+                                               [(ngModel)]="formData.email" name="email" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="tel" class="form-control" placeholder="+92 300 1234567"  name="phone">
+                                        <label>Phone <span class="required">*</span></label>
+                                        <input type="tel" class="form-control" placeholder="+92 300 1234567" 
+                                               [(ngModel)]="formData.phone" name="phone" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Subject</label>
-                                        <input type="text" class="form-control" placeholder="How can we help?"  name="subject" required>
+                                        <label>Company <span class="optional">(optional)</span></label>
+                                        <input type="text" class="form-control" placeholder="Your Company" 
+                                               [(ngModel)]="formData.company" name="company">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Your Message</label>
-                                        <textarea class="form-control" rows="5" placeholder="Write your message here..."  name="message" required></textarea>
+                                        <label>Message <span class="required">*</span></label>
+                                        <textarea class="form-control" rows="5" placeholder="Write your message here..." 
+                                                  [(ngModel)]="formData.message" name="message" required
+                                                  (input)="updateCharCount()"></textarea>
+                                        <div class="char-count">
+                                            <span [class.danger]="charCount > 300">{{ charCount }}</span> / 300 characters
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <button type="submit" class="btn-submit">
-                                        Send Message <i class="fas fa-paper-plane"></i>
+                                        Submit <i class="fas fa-paper-plane"></i>
                                     </button>
                                 </div>
                             </div>
@@ -120,10 +131,10 @@
                                 style="border:0;" 
                                 allowfullscreen="" 
                                 loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Google Map">
                             </iframe>
                             
-                            <!-- Overlay Map Info -->
                             <div class="map-overlay">
                                 <div class="map-info">
                                     <div class="map-info-icon">
@@ -131,8 +142,8 @@
                                     </div>
                                     <div class="map-info-content">
                                         <h4>Find Us</h4>
-                                        <p>F-57/1 Clifton Block 8, Karachi</p>
-                                        <small>ZONE A, BLOCK 7, DEFENCE PHASE 7</small>
+                                        <p>Suite No. 106, 1st Floor, Clifton</p>
+                                        <small>Broadway Building, Clifton, Karachi</small>
                                     </div>
                                 </div>
                             </div>
@@ -143,4 +154,3 @@
         </div>
     </div>
 </section>
- </div>

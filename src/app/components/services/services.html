@@ -1,94 +1,90 @@
-<!-- ====== SERVICES SECTION ====== -->
-<section class="services-section pt-100 pb-70">
-       <div class="section-head text-center">
-            <h2>Fertility Service <span>We Offer</span></h2>
-            <p>Advanced fertility treatments with cutting-edge technology and compassionate care to help you achieve your dream of parenthood.</p>
-        </div>
+<!-- service.component.html -->
+<!-- ====== SERVICE PAGE - VEHICLE CATEGORIES + FAQ - GREEN & BLUE THEME ====== -->
+
+<!-- ====== VEHICLE CATEGORIES SECTION ====== -->
+<section class="vehicle-categories-section">
     <div class="container">
         <!-- Section Header -->
-     
-        
-        <div class="row">
-            <!-- Service 1: IVF -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3>IVF</h3>
-                    <p>In Vitro Fertilization performed in a specialized laboratory where an egg is fertilized by sperm outside the body.</p>
-                    <div class="service-btn">
-                        <a href="#" class="btn-service">Read More <i class="fas fa-arrow-right"></i></a>
+        <div class="section-head text-center">
+            <h2>What type of car are you <span>looking for?</span></h2>
+            <p>Choose from our wide range of vehicles to match your needs and budget</p>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="categories-grid">
+            <div class="category-card" *ngFor="let category of categories" 
+                 [class.active]="category.active"
+                 (click)="selectCategory(category)">
+                <div class="category-icon">
+                    <i [class]="category.icon"></i>
+                </div>
+                <div class="category-content">
+                    <h3>{{ category.title }}</h3>
+                    <p>{{ category.description }}</p>
+                    <div class="category-arrow">
+                        <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </div>
-            
-            <!-- Service 2: IUI -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="service-card active-service">
-                    <div class="service-icon">
-                        <i class="fas fa-syringe"></i>
+        </div>
+    </div>
+</section>
+
+<!-- ====== FAQ SECTION ====== -->
+<section class="faq-section">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-head text-center">
+            <h2>Frequently Asked <span>Questions</span></h2>
+            <p>Find answers to the most common questions about our car rental services</p>
+        </div>
+
+        <div class="faq-wrapper">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <!-- FAQ Accordion -->
+                    <div class="faq-accordion">
+                        <div class="faq-item" *ngFor="let faq of faqs; let i = index" 
+                             [class.active]="faq.open"
+                             (click)="toggleFaq(i)">
+                            <div class="faq-question">
+                                <span class="faq-icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
+                                <h3>{{ faq.question }}</h3>
+                                <span class="faq-toggle">
+                                    <i class="fas fa-chevron-down"></i>
+                                </span>
+                            </div>
+                            <div class="faq-answer" [class.open]="faq.open">
+                                <p>{{ faq.answer }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3>IUI</h3>
-                    <p>Intrauterine Insemination - a simple procedure where prepared sperm is inserted directly into the uterus using a catheter.</p>
-                    <div class="service-btn">
-                        <a href="#" class="btn-service">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Service 3: ICSI -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-microscope"></i>
-                    </div>
-                    <h3>ICSI</h3>
-                    <p>Intracytoplasmic Sperm Injection - a delicate procedure where a single sperm is injected directly into an egg.</p>
-                    <div class="service-btn">
-                        <a href="#" class="btn-service">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Service 4: Gender Selection -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-venus-mars"></i>
-                    </div>
-                    <h3>Gender Selection</h3>
-                    <p>Advanced techniques that separate sperm cells based on DNA content to enrich for X-bearing or Y-bearing sperm.</p>
-                    <div class="service-btn">
-                        <a href="#" class="btn-service">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Service 5: PGT -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-dna"></i>
-                    </div>
-                    <h3>PGT</h3>
-                    <p>Preimplantation Genetic Testing - a procedure used during IVF to test embryos for genetic abnormalities before transfer.</p>
-                    <div class="service-btn">
-                        <a href="#" class="btn-service">Read More <i class="fas fa-arrow-right"></i></a>
+
+                    <!-- View All Button -->
+                    <div class="view-all-wrapper">
+                        <a routerLink="/faq" class="btn-view-all">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Service 6: Fertility Preservation -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-snowflake"></i>
-                    </div>
-                    <h3>Fertility Preservation</h3>
-                    <p>Egg and embryo freezing services to preserve fertility for future family planning and medical needs.</p>
-                    <div class="service-btn">
-                        <a href="#" class="btn-service">Read More <i class="fas fa-arrow-right"></i></a>
+
+                <div class="col-lg-6">
+                    <!-- FAQ Image / Illustration -->
+                    <div class="faq-image">
+                        <img src="https://images.unsplash.com/photo-1550355291-bbee04a5a8b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="FAQ Illustration">
+                        <div class="faq-image-overlay">
+                            <div class="overlay-content">
+                                <i class="fas fa-headset"></i>
+                                <h4>Got Questions?</h4>
+                                <p>We're here to help you 24/7</p>
+                                <a href="tel:00923000736859" class="overlay-phone">
+                                    <i class="fas fa-phone-alt"></i> 0092 300 0736859
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
-<!-- ====== HERO SECTION WITH CUSTOM CAROUSEL ====== -->
+<!-- hero.component.html - Merged Hero + Search Section -->
+<!-- ====== HERO SECTION WITH CAROUSEL + SEARCH (Green & Blue Theme) ====== -->
 <section class="hero-section" 
          (mouseenter)="pauseAutoplay()" 
          (mouseleave)="resumeAutoplay()">
@@ -10,20 +11,93 @@
       
       <div class="carousel-slide" 
            *ngFor="let slide of slides; let i = index"
-           [style.background-image]="'url(' + slide.image + ')'"
-           [style.background-size]="'cover'"
-           [style.background-position]="'center'">
+           [style.background-image]="'url(' + slide.image + ')'">
         
-        <!-- Multiple Overlay Layers for Shadow Effect -->
+        <!-- Overlay Layers -->
         <div class="slide-overlay overlay-dark"></div>
         <div class="slide-overlay overlay-gradient"></div>
-        <div class="slide-overlay overlay-shadow"></div>
         
         <div class="slide-content">
           <div class="container">
             <div class="hero-text">
               <h1 [innerHTML]="slide.title"></h1>
               <p>{{ slide.description }}</p>
+              
+              <!-- ===== INTEGRATED SEARCH FORM ===== -->
+              <div class="hero-search-wrapper">
+                <form class="hero-search-form" (ngSubmit)="onSearch()">
+                  <div class="search-row">
+                    <!-- Pickup Location -->
+                    <div class="search-field">
+                      <div class="field-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <input type="text" 
+                             placeholder="Where to pick up?"
+                             [(ngModel)]="searchData.pickupLocation"
+                             name="pickupLocation"
+                             class="search-input"
+                             required>
+                    </div>
+
+                    <!-- Pickup Date -->
+                    <div class="search-field">
+                      <div class="field-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                      </div>
+                      <input type="date" 
+                             [(ngModel)]="searchData.pickupDate"
+                             name="pickupDate"
+                             class="search-input"
+                             required>
+                    </div>
+
+                    <!-- Pickup Time -->
+                    <div class="search-field">
+                      <div class="field-icon">
+                        <i class="fas fa-clock"></i>
+                      </div>
+                      <input type="time" 
+                             [(ngModel)]="searchData.pickupTime"
+                             name="pickupTime"
+                             class="search-input"
+                             required>
+                    </div>
+
+                    <!-- Drop-off Date -->
+                    <div class="search-field">
+                      <div class="field-icon">
+                        <i class="fas fa-calendar-check"></i>
+                      </div>
+                      <input type="date" 
+                             [(ngModel)]="searchData.dropoffDate"
+                             name="dropoffDate"
+                             class="search-input"
+                             required>
+                    </div>
+
+                    <!-- Search Button -->
+                    <button type="submit" class="btn-search-hero">
+                      <i class="fas fa-search"></i>
+                      Search
+                    </button>
+                  </div>
+
+                  <!-- Same Location Toggle -->
+                  <div class="search-options">
+                    <label class="checkbox-label">
+                      <input type="checkbox" 
+                             [(ngModel)]="searchData.sameLocation"
+                             name="sameLocation">
+                      <span class="checkmark"></span>
+                      <i class="fas fa-check-circle"></i>
+                      Drop-off at same location
+                    </label>
+                  </div>
+                </form>
+              </div>
+              <!-- ===== END SEARCH FORM ===== -->
+
               <div class="hero-buttons">
                 <a href="#" class="btn btn-primary btn-hero">Know More</a>
                 <a href="#" class="btn btn-outline-light btn-hero">Get Started</a>
@@ -35,14 +109,14 @@
     </div>
 
     <!-- Carousel Controls -->
-    <button class="carousel-control carousel-control-prev" (click)="prevSlide()">
+    <button class="carousel-control carousel-control-prev" (click)="prevSlide()" aria-label="Previous slide">
       <span class="control-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 18l-6-6 6-6"/>
         </svg>
       </span>
     </button>
-    <button class="carousel-control carousel-control-next" (click)="nextSlide()">
+    <button class="carousel-control carousel-control-next" (click)="nextSlide()" aria-label="Next slide">
       <span class="control-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 18l6-6-6-6"/>
