@@ -1,5 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://ivf.runasp.net/api',
-//   apiUrl: 'https://localhost:5001/api',
+  apiUrl: 'https://localhost:7179' // Replace with your API URL
 };

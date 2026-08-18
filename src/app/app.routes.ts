@@ -10,20 +10,21 @@ import { AiIvfComponent } from './components/SERVICE_MODULE/ai-ivf/ai-ivf.compon
 import { Services } from './components/services/services';
 import { ServiceRoute } from './components/SERVICE_MODULE/service.route';
 import { CarsSectionComponent } from './components/cars-section/cars-section.component';
+import { AuthGuard } from './core/auth/auth.guard';
+import { RegisterComponent } from './Authentication/register/register.component';
+import { LoginComponent } from './Authentication/login/login.component';
 
 export const routes: Routes = [
-     // Fixed: Removed the leading '/' so it correctly matches the empty root path
-     { path: 'RENT-A-CAR', component: Home }, 
-     
+     { path: 'RENT-A-CAR', component: Home },
+     { path: 'login', component: LoginComponent },
+     { path: 'register', component: RegisterComponent },
      { path: 'Contact-Us', component: Contact },
      { path: 'CarSection', component: CarsSectionComponent },
-     { path: 'Appointment', component: AppointmentComponent },
+     { path: 'Appointment', component: AppointmentComponent, canActivate: [AuthGuard] },
      { path: 'Blog', component: BlogComponent },
      { path: 'About-Us', component: About },
-     { path: 'payment/:appointmentNumber', component: PaymentComponent }, 
-     { path: 'IVF-VS-AI-IVF', component: IvfVsAiComponent }, 
-     
+     { path: 'payment/:appointmentNumber', component: PaymentComponent, canActivate: [AuthGuard] },
+     { path: 'IVF-VS-AI-IVF', component: IvfVsAiComponent },
      ...ServiceRoute,
-
      { path: '**', redirectTo: 'RENT-A-CAR' }
 ];

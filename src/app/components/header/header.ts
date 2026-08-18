@@ -1,7 +1,7 @@
-// header.component.ts
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +11,16 @@ import { RouterModule, Router } from '@angular/router';
   styleUrls: ['./header.css']
 })
 export class Header implements OnInit {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private el = inject(ElementRef);
+
   isMobileMenuOpen = false;
 
-  constructor(private el: ElementRef, private router: Router) {}
+  // Expose auth service to template
+  get auth() {
+    return this.authService;
+  }
 
   ngOnInit(): void {
     this.initStickyHeader();
@@ -40,6 +47,12 @@ export class Header implements OnInit {
   // Check if route is active (for .active class)
   isActive(route: string): boolean {
     return this.router.url === route;
+  }
+
+  // Logout
+  logout(): void {
+    this.authService.logout();
+    this.closeMobileMenu();
   }
 
   // Sticky header: white background on scroll
