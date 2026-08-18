@@ -37,6 +37,44 @@
           <a class="nav-link" routerLink="/Contact-Us" (click)="closeMobileMenu()">Contact</a>
         </li>
       </ul>
+      
+      <!-- Auth Links -->
+      <div class="auth-links">
+        <ng-container *ngIf="!(auth.isAuthenticated$ | async)">
+          <a class="auth-btn auth-login" routerLink="/login" (click)="closeMobileMenu()">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a class="auth-btn auth-register" routerLink="/register" (click)="closeMobileMenu()">
+            <i class="fas fa-user-plus"></i> Register
+          </a>
+        </ng-container>
+        <ng-container *ngIf="(auth.isAuthenticated$ | async)">
+          <div class="user-dropdown">
+            <div class="user-info" >
+              <span class="user-avatar">
+                {{ (auth.currentUser$ | async)?.firstName?.charAt(0) }}{{ (auth.currentUser$ | async)?.lastName?.charAt(0) }}
+              </span>
+              <span class="user-name">{{ (auth.currentUser$ | async)?.firstName }}</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="dropdown-menu" >
+              <a routerLink="/profile" (click)="closeMobileMenu()">
+                <i class="fas fa-user"></i> Profile
+              </a>
+              <a routerLink="/my-bookings" (click)="closeMobileMenu()">
+                <i class="fas fa-calendar-alt"></i> My Bookings
+              </a>
+              <a routerLink="/change-password" (click)="closeMobileMenu()">
+                <i class="fas fa-key"></i> Change Password
+              </a>
+              <hr>
+              <button class="logout-btn" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
 </nav>
