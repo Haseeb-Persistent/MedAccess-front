@@ -72,8 +72,6 @@ export class AuthService {
     if (token && user) {
       this.currentUserSubject.next(user);
       this.isAuthenticatedSubject.next(true);
-    } else {
-      this.clearAuthData();
     }
   }
 
@@ -101,7 +99,6 @@ export class AuthService {
       );
   }
 
-  // ✅ Add Refresh Token Method
   refreshToken(): Observable<AuthResponse> {
     const accessToken = this.getAccessToken();
     const refreshToken = this.getRefreshToken();
@@ -133,28 +130,8 @@ export class AuthService {
   }
 
   logout(): void {
-    const refreshToken = this.getRefreshToken();
-    const accessToken = this.getAccessToken();
-
-    if (refreshToken) {
-      this.http.post(`${this.API_URL}/api/auth/logout`, {}, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${accessToken}`
-        })
-      }).subscribe({
-        next: () => {
-          this.clearAuthData();
-          this.router.navigate(['/login']);
-        },
-        error: () => {
-          this.clearAuthData();
-          this.router.navigate(['/login']);
-        }
-      });
-    } else {
-      this.clearAuthData();
-      this.router.navigate(['/login']);
-    }
+    this.clearAuthData();
+    this.router.navigate(['/login']);
   }
 
   private handleAuthResponse(response: AuthResponse): void {

@@ -11,7 +11,7 @@
     
     <!-- Site logo -->
     <a class="logo" routerLink="/" (click)="closeMobileMenu()">
-      <img src="/assets/img/main-logo.png" alt="Rently" >
+      <img src="/assets/img/main-logo.png" alt="Rently">
     </a>
     
     <!-- Navigation links -->
@@ -31,17 +31,76 @@
       <li [class.active]="isActive('/Contact-Us')">
         <a routerLink="/Contact-Us" (click)="closeMobileMenu()">Contact</a>
       </li>
-      <!-- Auth buttons in mobile menu -->
-      <li class="mobile-auth-links">
-        <a routerLink="/login" class="btn btn-outline-primary" (click)="closeMobileMenu()">Login</a>
-        <a routerLink="/signup" class="btn btn-primary" (click)="closeMobileMenu()">Sign Up</a>
-      </li>
+      
+      <!-- Mobile Auth Links - Show only when NOT logged in -->
+      <ng-container *ngIf="!(auth.isAuthenticated$ | async)">
+        <li class="mobile-auth-links">
+          <a routerLink="/login" class="btn btn-outline-primary" (click)="closeMobileMenu()">Login</a>
+          <a routerLink="/register" class="btn btn-primary" (click)="closeMobileMenu()">Sign Up</a>
+        </li>
+      </ng-container>
+
+      <!-- Mobile User Menu - Show only when logged in -->
+      <ng-container *ngIf="(auth.isAuthenticated$ | async)">
+        <li class="mobile-user-menu">
+          <div class="mobile-user-info" (click)="toggleDropdown()">
+            <span class="user-avatar">
+              {{ (auth.currentUser$ | async)?.firstName?.charAt(0) }}{{ (auth.currentUser$ | async)?.lastName?.charAt(0) }}
+            </span>
+            <span class="user-name">{{ (auth.currentUser$ | async)?.firstName }}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="mobile-dropdown" [class.show]="isDropdownOpen">
+            <a routerLink="/profile" (click)="closeMobileMenu(); closeDropdown()">
+              <i class="fas fa-user"></i> Profile
+            </a>
+            <a routerLink="/my-bookings" (click)="closeMobileMenu(); closeDropdown()">
+              <i class="fas fa-calendar-alt"></i> My Bookings
+            </a>
+            <a routerLink="/change-password" (click)="closeMobileMenu(); closeDropdown()">
+              <i class="fas fa-key"></i> Change Password
+            </a>
+            <hr>
+            <button class="logout-btn" (click)="logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </div>
+        </li>
+      </ng-container>
     </ul>
     
-    <!-- Auth Buttons - Desktop -->
-    <div class="auth-buttons">
+    <!-- Desktop Auth Buttons - Show only when NOT logged in -->
+    <div class="auth-buttons" *ngIf="!(auth.isAuthenticated$ | async)">
       <a routerLink="/login" class="btn btn-outline-primary btn-sm">Login</a>
-      <a routerLink="/signup" class="btn btn-primary btn-sm">Sign Up</a>
+      <a routerLink="/register" class="btn btn-primary btn-sm">Sign Up</a>
+    </div>
+
+    <!-- Desktop User Dropdown - Show only when logged in -->
+    <div class="auth-buttons" *ngIf="(auth.isAuthenticated$ | async)">
+      <div class="user-dropdown">
+        <div class="user-info" (click)="toggleDropdown()">
+          <span class="user-avatar">
+            {{ (auth.currentUser$ | async)?.firstName?.charAt(0) }}{{ (auth.currentUser$ | async)?.lastName?.charAt(0) }}
+          </span>
+          <span class="user-name">{{ (auth.currentUser$ | async)?.firstName }}</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="dropdown-menu" [class.show]="isDropdownOpen">
+          <a routerLink="/profile" (click)="closeDropdown()">
+            <i class="fas fa-user"></i> Profile
+          </a>
+          <a routerLink="/my-bookings" (click)="closeDropdown()">
+            <i class="fas fa-calendar-alt"></i> My Bookings
+          </a>
+          <a routerLink="/change-password" (click)="closeDropdown()">
+            <i class="fas fa-key"></i> Change Password
+          </a>
+          <hr>
+          <button class="logout-btn" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

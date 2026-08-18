@@ -16,7 +16,20 @@ export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  registerForm!: FormGroup;
+  // ✅ Initialize with default values
+  registerForm: FormGroup = this.fb.group({
+    firstName: ['', [Validators.required, Validators.minLength(2)]],
+    lastName: ['', [Validators.required, Validators.minLength(2)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', [Validators.required]],
+    phoneNumber: ['', [Validators.pattern('^[0-9]{10,15}$')]],
+    address: [''],
+    termsAccepted: [false, [Validators.requiredTrue]]
+  }, {
+    validators: this.passwordMatchValidator
+  });
+
   isLoading = false;
   submitted = false;
   showPassword = false;
@@ -27,19 +40,6 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/RENT-A-CAR']);
       return;
     }
-
-    this.registerForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.pattern('^[0-9]{10,15}$')]],
-      address: [''],
-      termsAccepted: [false, [Validators.requiredTrue]]
-    }, {
-      validators: this.passwordMatchValidator
-    });
   }
 
   get f() {
@@ -55,7 +55,6 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.registerForm.invalid) {
-      // Mark all fields as touched to show errors
       Object.keys(this.registerForm.controls).forEach(key => {
         const control = this.registerForm.get(key);
         control?.markAsTouched();

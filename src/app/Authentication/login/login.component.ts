@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -15,25 +15,27 @@ export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  loginForm!: FormGroup;
+  // ✅ Initialize with default values
+  loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    rememberMe: [false]
+  });
+  
   isLoading = false;
   submitted = false;
   showPassword = false;
   returnUrl: string = '/RENT-A-CAR';
 
   ngOnInit(): void {
-    // If already logged in, redirect
     if (this.authService.isAuthenticated()) {
-      this.router.navigate([this.returnUrl]);
+      this.router.navigate(['/RENT-A-CAR']);
       return;
     }
 
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rememberMe: [false]
-    });
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/RENT-A-CAR';
   }
 
   get f() {
@@ -43,7 +45,6 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.loginForm.invalid) {
-      // Mark all fields as touched to show errors
       Object.keys(this.loginForm.controls).forEach(key => {
         const control = this.loginForm.get(key);
         control?.markAsTouched();
@@ -60,7 +61,6 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.isLoading = false;
         if (response.isSuccess) {
-          // Navigate to home or return URL
           this.router.navigate([this.returnUrl]);
         }
       },

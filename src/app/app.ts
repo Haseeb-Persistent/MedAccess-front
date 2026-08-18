@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ModalComponent } from "./components/modal/modal.component";
@@ -8,7 +8,6 @@ import { WhatsappButtonComponent } from "./components/whatsapp-button/whatsapp-b
 import { ChatbotComponent } from "./components/chatbot/chatbot.component";
 import { AosService } from './services/aos.service';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthInterceptor } from './core/auth.interceptor';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +20,7 @@ import { AuthInterceptor } from './core/auth.interceptor';
     WhatsappButtonComponent, 
     ChatbotComponent
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
+  // ✅ No providers array here
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

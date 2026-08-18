@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ export class Header implements OnInit {
   private el = inject(ElementRef);
 
   isMobileMenuOpen = false;
-  isHomePage = true;
+  isDropdownOpen = false;
 
   // Expose auth service to template
   get auth() {
@@ -25,17 +25,8 @@ export class Header implements OnInit {
 
   ngOnInit(): void {
     this.initStickyHeader();
-    
-    // Check if current route is home page
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.isHomePage = event.url === '/' || event.url === '';
-      this.updateHeaderBackground();
-    });
   }
 
-  // Toggle mobile menu
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
     if (this.isMobileMenuOpen) {
@@ -45,34 +36,36 @@ export class Header implements OnInit {
     }
   }
 
-  // Close mobile menu
   closeMobileMenu(): void {
     if (this.isMobileMenuOpen) {
       this.isMobileMenuOpen = false;
       document.body.style.overflow = '';
-      const checkbox = document.getElementById('check') as HTMLInputElement;
-      if (checkbox) {
-        checkbox.checked = false;
-      }
     }
   }
 
-  // Check if route is active
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+
   isActive(route: string): boolean {
     return this.router.url === route;
   }
 
-  // Logout
   logout(): void {
     this.authService.logout();
     this.closeMobileMenu();
+    this.closeDropdown();
   }
 
-  // Update header background based on scroll and page
-  updateHeaderBackground(): void {
+  @HostListener('window:scroll', [])
+  initStickyHeader(): void {
     const header = document.getElementById('ftco-navbar');
     if (header) {
-      if (window.scrollY > 30 || !this.isHomePage) {
+      if (window.scrollY > 50) {
         header.classList.add('header-scrolled');
       } else {
         header.classList.remove('header-scrolled');
@@ -80,37 +73,39 @@ export class Header implements OnInit {
     }
   }
 
-  // Sticky header with scroll effects
-  @HostListener('window:scroll', [])
-  initStickyHeader(): void {
-    this.updateHeaderBackground();
-  }
-
-  // Close mobile menu on ESC
   @HostListener('document:keydown.escape')
   onEscapeKey(): void {
     this.closeMobileMenu();
+    this.closeDropdown();
   }
 
-  // Close mobile menu when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
+    // Close mobile menu
     if (this.isMobileMenuOpen) {
       const target = event.target as HTMLElement;
-      const nav = this.el.nativeElement.querySelector('nav ul');
+      const navbar = this.el.nativeElement.querySelector('ul');
       const toggler = this.el.nativeElement.querySelector('.checkbtn');
-      if (nav && toggler) {
-        if (!nav.contains(target) && !toggler.contains(target)) {
+      if (navbar && toggler) {
+        if (!navbar.contains(target) && !toggler.contains(target)) {
           this.closeMobileMenu();
         }
       }
     }
+
+    // Close dropdown
+    if (this.isDropdownOpen) {
+      const target = event.target as HTMLElement;
+      const dropdown = this.el.nativeElement.querySelector('.user-dropdown');
+      if (dropdown && !dropdown.contains(target)) {
+        this.closeDropdown();
+      }
+    }
   }
 
-  // On resize, if desktop, close mobile menu
   @HostListener('window:resize')
   onResize(): void {
-    if (window.innerWidth >= 891 && this.isMobileMenuOpen) {
+    if (window.innerWidth >= 992 && this.isMobileMenuOpen) {
       this.closeMobileMenu();
     }
   }
