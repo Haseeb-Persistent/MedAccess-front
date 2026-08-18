@@ -1,77 +1,94 @@
+<!-- about.component.html -->
+<!-- ====== ABOUT US PAGE - RENTLY THEME ====== -->
 
-
-
- <div data-aos="fade-right" data-aos-duration="1000">
-  <section class="about-video-section">
-  <div class="video-overlay">
-    <h1 class="page-title">About Us</h1>
+<!-- Image Banner Section -->
+<section class="about-banner-section">
+  <div class="banner-image">
+    <img src="/assets/img/about-us-img.png" alt="About Rently">
   </div>
-  <video src="https://themedaccess.com/assets/video/IVF%20video-1.mp4" autoplay muted loop playsinline class="background-video"></video>
-</section>
+  <div class="banner-overlay">
+    <div class="container">
+      <div class="banner-content">
+        <h1 class="page-title">About <span>Us</span></h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">About Us</li>
+          </ol>
+        </nav>
+      </div>
     </div>
+  </div>
+</section>
 
- <div data-aos="fade-left" data-aos-duration="1000">
-<section class="difference-section py-5">
+<!-- About Content Section -->
+<section class="about-content-section">
   <div class="container">
-    <div class="text-center my-4">
-      <h2 class="fw-bold section-heading">The Medaccess Difference</h2>
-    </div>
-
-    <div class="row justify-content-center g-4">
-      <!-- Card 1 -->
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="difference-card">
-          <div class="card-img-wrapper">
-            <img  src="https://genovafertility.com/wp-content/uploads/2020/08/Our-Embryology-Science-300x300.png" alt="Embryology Science">
-          </div>
-          <h5>Our Embryology Science</h5>
-          <p>At MedAccess, our AI-enhanced embryology lab uses cutting-edge technology to assess and select the healthiest embryos, increasing the chances of successful pregnancies with precision and care.</p>
-        </div>
+    <div class="about-grid">
+      <!-- Left: Text Content -->
+      <div class="about-text">
+        <h2>About <span>Rently</span></h2>
+        <p class="highlight-text">Rently is proud to be the only two-time 'Pakistan Consumer Choice Award' winner car rental provider in Pakistan.</p>
+        <p>Renting cars in the past was nothing less of a hassle. Traditional renting industry called for several rounds finding a car of your choice, inconsistent rates, and low quality assurance. Rently is the first on-demand car rental service that solves all these problems on a single platform.</p>
       </div>
-
-      <!-- Card 2 -->
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="difference-card">
-          <div class="card-img-wrapper">
-            <img src="https://genovafertility.com/wp-content/uploads/2020/08/Our-Facility-300x300.png" alt="Our Facility">
-          </div>
-          <h5>Our Facility</h5>
-          <p>MedAccess AI IVF Center offers a world-class, patient-friendly environment equipped with the most advanced fertility technologies — ensuring comfort, privacy, and top-quality care.</p>
-        </div>
+      
+      <!-- Right: Image -->
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+             alt="Rently Car Rental">
       </div>
-
-      <!-- Card 3 -->
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="difference-card">
-          <div class="card-img-wrapper">
-            <img src="https://genovafertility.com/wp-content/uploads/2020/08/Our-Innovation-300x300.png" alt="Our Innovation">
-          </div>
-          <h5>Our Innovation</h5>
-          <p>We integrate AI and next-generation IVF solutions to improve egg and sperm selection, embryo development, and treatment accuracy — making every cycle smarter and more effective.</p>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <div class="difference-card">
-          <div class="card-img-wrapper">
-            <img src="https://genovafertility.com/wp-content/uploads/2020/08/Our-Armed-Forces-Discount-300x300.png" alt="Flexible Payment">
-          </div>
-          <h5>Flexible Payment Plan</h5>
-          <p>We understand that fertility treatment can be a major financial decision. That’s why MedAccess offers easy and flexible payment options, ensuring that advanced fertility care remains accessible to everyone.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cost Section -->
-    <div class="ivf-cost-section mt-5 text-center">
-      <h3 class="section-title">About the AI-IVF cost in Pakistan</h3>
-      <p class="section-text">
-        AI-IVF & AI-IVM cost in Pakistan can vary widely depending on several factors, including case study & the specific services provided, the expertise of the Embryologist & Medical Specialist professionals, and the region in Pakistan. IVF is a complex medical procedure that involves various steps, including ovarian stimulation, egg retrieval, fertilization, embryo culture, embryo transfer, etc. You should contact our AI-IVF expert for budget pricing with installment options along with highest success rate than traditional-gynae old IVF.<br>
-        <span class="fw-bold">(Your Pregnancy- Our Responsibility)</span><br>
-        InshALlah
-      </p>
     </div>
   </div>
 </section>
- </div>
+
+<!-- What We Do Section -->
+<section class="what-we-do-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>What We <span>Do</span></h2>
+      <p>Rently's car-rental services are available at your fingertips online, for a more modern and convenient customer experience. Get the car you want, at the time you asked for.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Service Card 1 -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="fas fa-building"></i>
+        </div>
+        <h3>Corporate Office Staff</h3>
+        <p>Reliable and professional car rental services for corporate employees, ensuring punctuality and comfort for your business needs.</p>
+      </div>
+
+      <!-- Service Card 2 -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="fas fa-route"></i>
+        </div>
+        <h3>Tours and Trips</h3>
+        <p>Explore Pakistan with our premium rental cars. From family vacations to adventure trips, we have the perfect vehicle for your journey.</p>
+      </div>
+
+      <!-- Service Card 3 -->
+      <div class="service-card">
+        <div class="service-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <h3>On-Demand Service</h3>
+        <p>Get a car whenever you need it. Our on-demand service ensures you're never without a ride, 24/7 availability at your fingertips.</p>
+      </div>
+    </div>
+
+    <!-- Award Badge -->
+    <div class="award-section">
+      <div class="award-badge">
+        <div class="award-icon">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div class="award-text">
+          <h3>Pakistan Consumer Choice Award</h3>
+          <p>Two-time winner - Trusted by thousands of customers across Pakistan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

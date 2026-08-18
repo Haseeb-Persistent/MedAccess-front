@@ -1,23 +1,61 @@
 <!-- cars-section.component.html -->
-<!-- ====== CARS SECTION - GREEN & BLUE THEME ====== -->
+<!-- ====== CARS SECTION - RENTLY THEME ====== -->
 <section class="cars-section">
   <div class="container">
     <!-- Section Header -->
     <div class="section-header">
       <div class="breadcrumb">
         <a routerLink="/">HOME</a>
-        <span class="separator">></span>
+        <span class="separator">›</span>
         <a routerLink="/cars">CARS</a>
-        <span class="separator">></span>
+        <span class="separator">›</span>
         <span class="current">Choose Your Car</span>
       </div>
       <h2>Choose Your <span class="highlight">Car</span></h2>
       <p>Select from our wide range of premium vehicles for your journey</p>
     </div>
 
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <div class="filter-item">
+          <label>Model</label>
+          <select class="filter-select">
+            <option>All</option>
+            <option>Honda</option>
+            <option>Toyota</option>
+            <option>Mercedes</option>
+            <option>BMW</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Vehicle Type</label>
+          <select class="filter-select">
+            <option>All</option>
+            <option>Sedan</option>
+            <option>SUV</option>
+            <option>Luxury</option>
+            <option>Vans</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Booking Type</label>
+          <select class="filter-select">
+            <option>All</option>
+            <option>In City</option>
+            <option>Out City</option>
+            <option>Short Rental</option>
+          </select>
+        </div>
+        <button class="btn-filter">
+          <i class="fas fa-sliders-h"></i> Apply Filters
+        </button>
+      </div>
+    </div>
+
     <!-- Cars Grid -->
     <div class="cars-grid">
-      <div class="car-card" *ngFor="let car of cars">
+      <div class="car-card" *ngFor="let car of cars; let i = index">
         <div class="car-image">
           <img [src]="car.image" [alt]="car.name">
           <div class="car-badge" *ngIf="car.badge">{{ car.badge }}</div>
@@ -42,10 +80,17 @@
               <i class="fas fa-check-circle"></i> {{ feature }}
             </span>
           </div>
-          
+
+          <div class="car-pricing">
+            <div class="price-option" *ngFor="let option of car.pricingOptions">
+              <span class="option-label">{{ option.label }}</span>
+              <span class="option-price">{{ option.price }}</span>
+            </div>
+          </div>
+
           <div class="car-footer">
             <div class="car-price">
-              <span class="price">${{ car.price }}</span>
+              <span class="price">{{ car.basePrice }}</span>
               <span class="per-day">/day</span>
             </div>
             <div class="car-buttons">

@@ -15,66 +15,106 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-           "assets": [
-  {
-    "glob": "**/*",
-    "input": "public"
-  },
-  {
-    "glob": "**/*",
-    "input": "src/assets",
-    "output": "/assets"
-  }
-],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              }
+            ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
+              "sourceMap": false,
+              "namedChunks": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputHashing": "all",
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "1.5MB",
+                  "maximumError": "2MB"
                 },
-             {
-  "type": "anyComponentStyle",
-  "maximumWarning": "15kb",
-  "maximumError": "20kb"
-}
-              ],
-              "outputHashing": "all"
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "30kb",
+                  "maximumError": "50kb"
+                }
+              ]
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "vercel": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
+              "sourceMap": false,
+              "namedChunks": false,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputHashing": "all",
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2MB",
+                  "maximumError": "3MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "50kb",
+                  "maximumError": "80kb"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
         },
-   "serve": {
-  "builder": "@angular/build:dev-server",
-  "options": {
-    "host": "0.0.0.0",
-    "allowedHosts": true
-  },
-  "configurations": {
-    "production": {
-      "buildTarget": "Themedacess2:build:production"
-    },
-    "development": {
-      "buildTarget": "Themedacess2:build:development"
-    }
-  },
-  "defaultConfiguration": "development"
-},
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "host": "0.0.0.0",
+            "allowedHosts": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "Themedacess2:build:production"
+            },
+            "development": {
+              "buildTarget": "Themedacess2:build:development"
+            },
+            "vercel": {
+              "buildTarget": "Themedacess2:build:vercel"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
         },
@@ -94,22 +134,15 @@
               }
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "src/styles.css",
-                 "node_modules/aos/dist/aos.css"
+              "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/swiper/swiper-bundle.min.js",
-               "node_modules/aos/dist/aos.js" 
-            ]
+            "scripts": []
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "d5a494da-8a18-43b4-8e00-49cc083405c9"
+    "analytics": false
   }
 }

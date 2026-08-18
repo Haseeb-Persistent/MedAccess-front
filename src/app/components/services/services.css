@@ -1,23 +1,25 @@
-/* service.component.css */
-/* ===== SERVICE PAGE - GREEN & BLUE THEME ===== */
+/* service.component.css - Updated with Rently Theme Colors */
+/* ===== SERVICE PAGE - RENTLY THEME ===== */
 
 :root {
-  --primary-green: #1e7b4c;
-  --primary-blue: #0d6efd;
-  --primary-dark: #0a2e1a;
-  --primary-light-green: #2ecc71;
-  --primary-light-blue: #4d9fff;
-  --text-dark: #1e293b;
-  --text-muted: #64748b;
+  --primary-green: #46d56b;
+  --primary-blue: #036ff3;
+  --primary-black: #000000;
+  --green-dark: #2fb352;
+  --blue-dark: #0255c4;
+  --green-light: #7ae097;
+  --blue-light: #4a8ff5;
+  --text-dark: #1a1a2e;
+  --text-muted: #4a5568;
   --bg-light: #f8fafc;
   --white: #ffffff;
-  --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 20px 60px rgba(30, 123, 76, 0.15);
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 20px 60px rgba(70, 213, 107, 0.12);
   --border-radius: 16px;
-  --transition: all 0.3s ease;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== SECTION HEADER (Shared) ===== */
+/* ===== SECTION HEADER ===== */
 .section-head {
   margin-bottom: 50px;
   position: relative;
@@ -26,10 +28,11 @@
 
 .section-head h2 {
   font-size: 38px;
-  font-weight: 700;
-  color: var(--text-dark);
-  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  color: var(--primary-black);
+  font-family: 'Inter', -apple-system, sans-serif;
   margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
 
 .section-head h2 span {
@@ -46,7 +49,7 @@
   height: 4px;
   background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
   margin: 12px auto 0;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .section-head p {
@@ -54,7 +57,7 @@
   color: var(--text-muted);
   max-width: 650px;
   margin: 8px auto 0;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.8;
 }
 
@@ -63,7 +66,7 @@
    ======================================== */
 .vehicle-categories-section {
   padding: 80px 0 60px;
-  background: var(--bg-light);
+  background: var(--white);
   position: relative;
   overflow: hidden;
 }
@@ -75,7 +78,7 @@
   right: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(30, 123, 76, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(70, 213, 107, 0.04) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -87,7 +90,7 @@
   left: -10%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(13, 110, 253, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(3, 111, 243, 0.04) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -107,7 +110,7 @@
   border-radius: var(--border-radius);
   padding: 30px 25px 25px;
   box-shadow: var(--shadow);
-  border: 2px solid rgba(30, 123, 76, 0.06);
+  border: 2px solid rgba(70, 213, 107, 0.06);
   transition: var(--transition);
   cursor: pointer;
   position: relative;
@@ -138,12 +141,12 @@
 .category-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-hover);
-  border-color: rgba(30, 123, 76, 0.15);
+  border-color: rgba(70, 213, 107, 0.15);
 }
 
 .category-card.active {
   border-color: var(--primary-green);
-  background: linear-gradient(135deg, rgba(30, 123, 76, 0.03), rgba(13, 110, 253, 0.03));
+  background: linear-gradient(135deg, rgba(70, 213, 107, 0.03), rgba(3, 111, 243, 0.03));
 }
 
 /* Category Icon */
@@ -152,7 +155,7 @@
   width: 60px;
   height: 60px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(30, 123, 76, 0.08), rgba(13, 110, 253, 0.08));
+  background: linear-gradient(135deg, rgba(70, 213, 107, 0.08), rgba(3, 111, 243, 0.08));
   color: var(--primary-green);
   display: flex;
   align-items: center;
@@ -166,7 +169,7 @@
   background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
   color: var(--white);
   transform: scale(1.05) rotate(-5deg);
-  box-shadow: 0 8px 25px rgba(30, 123, 76, 0.25);
+  box-shadow: 0 8px 25px rgba(70, 213, 107, 0.25);
 }
 
 /* Category Content */
@@ -176,11 +179,12 @@
 
 .category-content h3 {
   font-size: 20px;
-  font-weight: 600;
-  color: var(--text-dark);
-  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--primary-black);
+  font-family: 'Inter', sans-serif;
   margin-bottom: 4px;
   transition: var(--transition);
+  letter-spacing: -0.01em;
 }
 
 .category-card:hover .category-content h3,
@@ -193,7 +197,7 @@
   color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 0;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* Category Arrow */
@@ -221,7 +225,7 @@
   transform: translateX(0);
   background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
   color: var(--white);
-  box-shadow: 0 4px 15px rgba(30, 123, 76, 0.3);
+  box-shadow: 0 4px 15px rgba(70, 213, 107, 0.3);
 }
 
 /* ========================================
@@ -241,7 +245,7 @@
   left: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(13, 110, 253, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(3, 111, 243, 0.04) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -253,7 +257,7 @@
   right: -10%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(30, 123, 76, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(70, 213, 107, 0.04) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -262,6 +266,19 @@
 .faq-wrapper {
   position: relative;
   z-index: 1;
+}
+
+/* Row - Flexbox for proper alignment */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.col-lg-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding: 0 15px;
 }
 
 /* FAQ Accordion */
@@ -276,14 +293,14 @@
   background: var(--white);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  border: 1px solid rgba(30, 123, 76, 0.06);
+  border: 1px solid rgba(70, 213, 107, 0.06);
   overflow: hidden;
   transition: var(--transition);
   cursor: pointer;
 }
 
 .faq-item:hover {
-  border-color: rgba(30, 123, 76, 0.15);
+  border-color: rgba(70, 213, 107, 0.15);
   box-shadow: var(--shadow-hover);
 }
 
@@ -303,7 +320,7 @@
 }
 
 .faq-item.active .faq-question {
-  background: linear-gradient(135deg, rgba(30, 123, 76, 0.05), rgba(13, 110, 253, 0.05));
+  background: linear-gradient(135deg, rgba(70, 213, 107, 0.04), rgba(3, 111, 243, 0.04));
 }
 
 .faq-icon {
@@ -311,7 +328,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(30, 123, 76, 0.1), rgba(13, 110, 253, 0.1));
+  background: linear-gradient(135deg, rgba(70, 213, 107, 0.1), rgba(3, 111, 243, 0.1));
   color: var(--primary-green);
   display: flex;
   align-items: center;
@@ -327,12 +344,13 @@
 
 .faq-question h3 {
   font-size: 16px;
-  font-weight: 500;
-  color: var(--text-dark);
-  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--primary-black);
+  font-family: 'Inter', sans-serif;
   margin: 0;
   flex: 1;
   line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 .faq-toggle {
@@ -373,7 +391,7 @@
   color: var(--text-muted);
   line-height: 1.8;
   margin: 0;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* View All Button */
@@ -392,15 +410,16 @@
   border-radius: 50px;
   font-size: 15px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   text-decoration: none;
   transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(30, 123, 76, 0.25);
+  box-shadow: 0 4px 15px rgba(70, 213, 107, 0.25);
+  border: none;
 }
 
 .btn-view-all:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(30, 123, 76, 0.35);
+  box-shadow: 0 8px 30px rgba(70, 213, 107, 0.35);
   color: var(--white);
 }
 
@@ -435,11 +454,12 @@
   left: 30px;
   right: 30px;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 25px 30px;
   border-radius: var(--border-radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(30, 123, 76, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(70, 213, 107, 0.08);
 }
 
 .overlay-content {
@@ -455,9 +475,9 @@
 
 .overlay-content h4 {
   font-size: 18px;
-  font-weight: 600;
-  color: var(--text-dark);
-  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--primary-black);
+  font-family: 'Inter', sans-serif;
   margin: 0 0 4px;
 }
 
@@ -479,11 +499,12 @@
   font-weight: 600;
   text-decoration: none;
   transition: var(--transition);
+  font-family: 'Inter', sans-serif;
 }
 
 .overlay-phone:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(30, 123, 76, 0.3);
+  box-shadow: 0 8px 25px rgba(70, 213, 107, 0.3);
   color: var(--white);
 }
 
@@ -507,7 +528,7 @@
   }
 
   .section-head h2 {
-    font-size: 30px;
+    font-size: 32px;
   }
 
   .categories-grid {
@@ -523,6 +544,11 @@
   .faq-image img {
     min-height: 300px;
   }
+
+  .col-lg-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -535,7 +561,7 @@
   }
 
   .section-head h2 {
-    font-size: 26px;
+    font-size: 28px;
   }
 
   .section-head p {
@@ -633,7 +659,7 @@
   }
 
   .section-head h2 {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .section-head p {
