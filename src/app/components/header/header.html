@@ -1,42 +1,47 @@
 <!-- header.component.html -->
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar" id="ftco-navbar">
+<nav class="navbar" id="ftco-navbar">
   <div class="container">
-    <!-- Brand / Logo -->
-    <a class="navbar-brand" routerLink="/">
-      <img src="/assets/img/main-logo.png" alt="" style="width: 60px;height: 50px;">
+    <!-- Checkbox for toggling menu -->
+    <input type="checkbox" id="check" [checked]="isMobileMenuOpen" (change)="toggleMobileMenu()">
+    
+    <!-- Menu icon -->
+    <label for="check" class="checkbtn">
+      <i class="fas fa-bars"></i>
+    </label>
+    
+    <!-- Site logo -->
+    <a class="logo" routerLink="/" (click)="closeMobileMenu()">
+      <img src="/assets/img/main-logo.png" alt="Rently" >
     </a>
-
-    <!-- Toggler (mobile) -->
-    <button class="navbar-toggler" type="button" (click)="toggleMobileMenu()"
-            [attr.aria-expanded]="isMobileMenuOpen" aria-label="Toggle navigation">
-      <span class="oi oi-menu"></span> Menu
-    </button>
-
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" [class.show]="isMobileMenuOpen" id="ftco-nav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item" [class.active]="isActive('/')">
-          <a class="nav-link" routerLink="/" (click)="closeMobileMenu()">Home</a>
-        </li>
-        <li class="nav-item" [class.active]="isActive('/about')">
-          <a class="nav-link" routerLink="/about" (click)="closeMobileMenu()">About</a>
-        </li>
-        <li class="nav-item" [class.active]="isActive('/services')">
-          <a class="nav-link" routerLink="/services" (click)="closeMobileMenu()">Services</a>
-        </li>
-        <li class="nav-item" [class.active]="isActive('/pricing')">
-          <a class="nav-link" routerLink="/pricing" (click)="closeMobileMenu()">Pricing</a>
-        </li>
-        <li class="nav-item" [class.active]="isActive('/cars')">
-          <a class="nav-link" routerLink="/CarSection" (click)="closeMobileMenu()">Cars</a>
-        </li>
-        <li class="nav-item" [class.active]="isActive('/Blog')">
-          <a class="nav-link" routerLink="/Blog" (click)="closeMobileMenu()">Blog</a>
-        </li>
-        <li class="nav-item" [class.active]="isActive('/Contact-Us')">
-          <a class="nav-link" routerLink="/Contact-Us" (click)="closeMobileMenu()">Contact</a>
-        </li>
-      </ul>
+    
+    <!-- Navigation links -->
+    <ul>
+      <li [class.active]="isActive('/')">
+        <a routerLink="/" (click)="closeMobileMenu()">Home</a>
+      </li>
+      <li [class.active]="isActive('/About-Us')">
+        <a routerLink="/About-Us" (click)="closeMobileMenu()">About</a>
+      </li>
+      <li [class.active]="isActive('/CarSection')">
+        <a routerLink="/CarSection" (click)="closeMobileMenu()">Vehicles</a>
+      </li>
+      <li [class.active]="isActive('/Blog')">
+        <a routerLink="/Blog" (click)="closeMobileMenu()">Blog</a>
+      </li>
+      <li [class.active]="isActive('/Contact-Us')">
+        <a routerLink="/Contact-Us" (click)="closeMobileMenu()">Contact</a>
+      </li>
+      <!-- Auth buttons in mobile menu -->
+      <li class="mobile-auth-links">
+        <a routerLink="/login" class="btn btn-outline-primary" (click)="closeMobileMenu()">Login</a>
+        <a routerLink="/signup" class="btn btn-primary" (click)="closeMobileMenu()">Sign Up</a>
+      </li>
+    </ul>
+    
+    <!-- Auth Buttons - Desktop -->
+    <div class="auth-buttons">
+      <a routerLink="/login" class="btn btn-outline-primary btn-sm">Login</a>
+      <a routerLink="/signup" class="btn btn-primary btn-sm">Sign Up</a>
     </div>
   </div>
 </nav>

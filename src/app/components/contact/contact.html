@@ -1,5 +1,5 @@
 <!-- contact.component.html -->
-<!-- ====== CONTACT US PAGE - GREEN & BLUE THEME ====== -->
+<!-- ====== CONTACT US PAGE - RENTLY THEME ====== -->
 
 <!-- Page Banner -->
 <section class="page-banner">
@@ -20,131 +20,116 @@
 <section class="contact-section">
     <div class="container">
         <!-- Contact Info Cards -->
-        <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="contact-info-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h4>Address</h4>
-                    <p>Suite No. 106, 1st Floor, Clifton<br>Broadway Building, Clifton, Karachi<br>Postal Code: 75600, Pakistan</p>
+        <div class="contact-grid">
+            <!-- Address -->
+            <div class="contact-info-card">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
+                <h4>Address</h4>
+                <p>Suite No. 106, 1st Floor, Clifton<br>Broadway Building, Clifton, Karachi<br>Postal Code: 75600, Pakistan</p>
             </div>
             
-            <div class="col-lg-3 col-md-6">
-                <div class="contact-info-card active">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <h4>Call</h4>
-                    <p><a href="tel:00923000736859">0092 3000 RENTLY</a><br><a href="tel:00923000736859">0092 300 0736859</a></p>
+            <!-- Call -->
+            <div class="contact-info-card active">
+                <div class="contact-icon">
+                    <i class="fas fa-phone-alt"></i>
                 </div>
+                <h4>Call</h4>
+                <p><a href="tel:00923000736859">0092 3000 RENTLY</a><br><a href="tel:00923000736859">0092 300 0736859</a></p>
             </div>
             
-            <div class="col-lg-3 col-md-6">
-                <div class="contact-info-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h4>Email Address</h4>
-                    <p><a href="mailto:info@rently.com">info@rently.com</a><br><a href="mailto:support@rently.com">support@rently.com</a></p>
+            <!-- Email -->
+            <div class="contact-info-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
                 </div>
+                <h4>Email Address</h4>
+                <p><a href="mailto:info@rently.com">info@rently.com</a><br><a href="mailto:support@rently.com">support@rently.com</a></p>
             </div>
             
-            <div class="col-lg-3 col-md-6">
-                <div class="contact-info-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h4>Working Hours</h4>
-                    <p>Mon - Thu: 10:00AM - 06:00PM<br>Fri: 10:00AM - 02:00PM</p>
+            <!-- Working Hours -->
+            <div class="contact-info-card">
+                <div class="contact-icon">
+                    <i class="fas fa-clock"></i>
                 </div>
+                <h4>Working Hours</h4>
+                <p>Mon - Thu: 10:00AM - 06:00PM<br>Fri: 10:00AM - 02:00PM</p>
             </div>
         </div>
         
         <!-- Contact Form & Map -->
         <div class="contact-form-section">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="contact-form-wrapper">
-                        <h2>Get In <span>Touch</span></h2>
-                        <p>Have questions about our car rental services? We're here to help. Reach out to us and our team will get back to you promptly.</p>
+            <div class="form-map-grid">
+                <!-- Form -->
+                <div class="contact-form-wrapper">
+                    <h2>Get In <span>Touch</span></h2>
+                    <p>Have questions about our car rental services? We're here to help. Reach out to us and our team will get back to you promptly.</p>
+                    
+                    <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+                        <div class="form-group">
+                            <label>Name <span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder="Your Name" 
+                                   [(ngModel)]="formData.name" name="name" required>
+                        </div>
                         
-                        <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Name <span class="required">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Your Name" 
-                                               [(ngModel)]="formData.name" name="name" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email Address <span class="required">*</span></label>
-                                        <input type="email" class="form-control" placeholder="info@example.com" 
-                                               [(ngModel)]="formData.email" name="email" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone <span class="required">*</span></label>
-                                        <input type="tel" class="form-control" placeholder="+92 300 1234567" 
-                                               [(ngModel)]="formData.phone" name="phone" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Company <span class="optional">(optional)</span></label>
-                                        <input type="text" class="form-control" placeholder="Your Company" 
-                                               [(ngModel)]="formData.company" name="company">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Message <span class="required">*</span></label>
-                                        <textarea class="form-control" rows="5" placeholder="Write your message here..." 
-                                                  [(ngModel)]="formData.message" name="message" required
-                                                  (input)="updateCharCount()"></textarea>
-                                        <div class="char-count">
-                                            <span [class.danger]="charCount > 300">{{ charCount }}</span> / 300 characters
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn-submit">
-                                        Submit <i class="fas fa-paper-plane"></i>
-                                    </button>
-                                </div>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" class="form-control" placeholder="info@example.com" 
+                                   [(ngModel)]="formData.email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone <span class="required">*</span></label>
+                            <input type="tel" class="form-control" placeholder="+92 300 1234567" 
+                                   [(ngModel)]="formData.phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Company <span class="optional">(optional)</span></label>
+                            <input type="text" class="form-control" placeholder="Your Company" 
+                                   [(ngModel)]="formData.company" name="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Message <span class="required">*</span></label>
+                            <textarea class="form-control" rows="5" placeholder="Write your message here..." 
+                                      [(ngModel)]="formData.message" name="message" required
+                                      (input)="updateCharCount()"></textarea>
+                            <div class="char-count">
+                                <span [class.danger]="charCount > 300">{{ charCount }}</span> / 300 characters
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            Submit <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
                 
-                <div class="col-lg-6">
-                    <div class="contact-map">
-                        <div class="map-wrapper">
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.8352509697376!2d67.04532577511404!3d24.8264657474643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33c3c5b6e7a9d%3A0x8a3b7c9d2e5f8a1!2sClifton%20Block%208%2C%20Karachi%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000" 
-                                width="100%" 
-                                height="450" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade"
-                                title="Google Map">
-                            </iframe>
-                            
-                            <div class="map-overlay">
-                                <div class="map-info">
-                                    <div class="map-info-icon">
-                                        <i class="fas fa-location-dot"></i>
-                                    </div>
-                                    <div class="map-info-content">
-                                        <h4>Find Us</h4>
-                                        <p>Suite No. 106, 1st Floor, Clifton</p>
-                                        <small>Broadway Building, Clifton, Karachi</small>
-                                    </div>
+                <!-- Map -->
+                <div class="contact-map">
+                    <div class="map-wrapper">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.8352509697376!2d67.04532577511404!3d24.8264657474643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33c3c5b6e7a9d%3A0x8a3b7c9d2e5f8a1!2sClifton%20Block%208%2C%20Karachi%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Google Map">
+                        </iframe>
+                        
+                        <div class="map-overlay">
+                            <div class="map-info">
+                                <div class="map-info-icon">
+                                    <i class="fas fa-location-dot"></i>
+                                </div>
+                                <div class="map-info-content">
+                                    <h4>Find Us</h4>
+                                    <p>Suite No. 106, 1st Floor, Clifton</p>
+                                    <small>Broadway Building, Clifton, Karachi</small>
                                 </div>
                             </div>
                         </div>

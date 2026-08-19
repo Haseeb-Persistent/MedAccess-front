@@ -1,7 +1,8 @@
 // header.component.ts
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -12,11 +13,20 @@ import { RouterModule, Router } from '@angular/router';
 })
 export class Header implements OnInit {
   isMobileMenuOpen = false;
+  isHomePage = true;
 
   constructor(private el: ElementRef, private router: Router) {}
 
   ngOnInit(): void {
     this.initStickyHeader();
+    
+    // Check if current route is home page
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.isHomePage = event.url === '/' || event.url === '';
+      this.updateHeaderBackground();
+    });
   }
 
   // Toggle mobile menu
@@ -34,25 +44,34 @@ export class Header implements OnInit {
     if (this.isMobileMenuOpen) {
       this.isMobileMenuOpen = false;
       document.body.style.overflow = '';
+      const checkbox = document.getElementById('check') as HTMLInputElement;
+      if (checkbox) {
+        checkbox.checked = false;
+      }
     }
   }
 
-  // Check if route is active (for .active class)
+  // Check if route is active
   isActive(route: string): boolean {
     return this.router.url === route;
   }
 
-  // Sticky header: white background on scroll
-  @HostListener('window:scroll', [])
-  initStickyHeader(): void {
+  // Update header background based on scroll and page
+  updateHeaderBackground(): void {
     const header = document.getElementById('ftco-navbar');
     if (header) {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 30 || !this.isHomePage) {
         header.classList.add('header-scrolled');
       } else {
         header.classList.remove('header-scrolled');
       }
     }
+  }
+
+  // Sticky header with scroll effects
+  @HostListener('window:scroll', [])
+  initStickyHeader(): void {
+    this.updateHeaderBackground();
   }
 
   // Close mobile menu on ESC
@@ -61,15 +80,15 @@ export class Header implements OnInit {
     this.closeMobileMenu();
   }
 
-  // Close mobile menu when clicking outside (on mobile)
+  // Close mobile menu when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     if (this.isMobileMenuOpen) {
       const target = event.target as HTMLElement;
-      const navbar = this.el.nativeElement.querySelector('#ftco-nav');
-      const toggler = this.el.nativeElement.querySelector('.navbar-toggler');
-      if (navbar && toggler) {
-        if (!navbar.contains(target) && !toggler.contains(target)) {
+      const nav = this.el.nativeElement.querySelector('nav ul');
+      const toggler = this.el.nativeElement.querySelector('.checkbtn');
+      if (nav && toggler) {
+        if (!nav.contains(target) && !toggler.contains(target)) {
           this.closeMobileMenu();
         }
       }
@@ -79,7 +98,7 @@ export class Header implements OnInit {
   // On resize, if desktop, close mobile menu
   @HostListener('window:resize')
   onResize(): void {
-    if (window.innerWidth >= 992 && this.isMobileMenuOpen) {
+    if (window.innerWidth >= 891 && this.isMobileMenuOpen) {
       this.closeMobileMenu();
     }
   }
