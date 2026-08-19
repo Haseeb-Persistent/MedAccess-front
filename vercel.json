@@ -1,17 +1,13 @@
 {
-  "buildCommand": "bash vercel-build.sh",
+  "buildCommand": "npm install --legacy-peer-deps && npm run build:vercel -- --max-old-space-size=4096",
   "outputDirectory": "dist/Themedacess2/browser",
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "npm install --legacy-peer-deps --no-audit --no-fund",
   "framework": "angular",
   "nodeVersion": "18.x",
   "env": {
     "NODE_ENV": "production",
     "NG_BUILD_OPTIMIZATION": "true",
-    "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
-  },
-  "git": {
-    "deploymentEnabled": {
-      "main": true
-    }
+    "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+    "NODE_OPTIONS": "--max-old-space-size=4096"
   }
 }
