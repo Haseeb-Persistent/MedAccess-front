@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/Themedacess2/browser",
+  "installCommand": "npm install",
+  "framework": "angular",
+  "env": {
+    "NODE_ENV": "production",
+    "NG_BUILD_OPTIMIZATION": "true"
+  },
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}
