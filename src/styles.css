@@ -10,17 +10,17 @@
 /* ----- CSS Variables (Theme Colors) ----- */
 :root {
   /* Primary Colors */
-  --primary-green: #46d56b;
-  --primary-blue: #036ff3;
+  --primary-green: #2b67a3;
+  --primary-blue: #074888 !important;
   --primary-black: #000000;
   
   /* Extended Palette */
-  --green-light: #7ae097;
-  --green-dark: #2fb352;
-  --blue-light: #4a8ff5;
-  --blue-dark: #0255c4;
-  --blue-gradient: linear-gradient(135deg, #036ff3 0%, #1a7ff5 100%);
-  --green-gradient: linear-gradient(135deg, #46d56b 0%, #7ae097 100%);
+  --green-light: #074888;
+  --green-dark: #2b67a3;
+  --blue-light: #074888;
+  --blue-dark: #074888;
+  --blue-gradient: linear-gradient(135deg, #074888 0%, #074888 100%);
+  --green-gradient: linear-gradient(135deg, #2b67a3 0%, #2b67a3 100%);
   
   /* Neutrals */
   --white: #ffffff;
@@ -40,11 +40,11 @@
   --shadow-green: 0 8px 30px rgba(70, 213, 107, 0.2);
   
   /* Border Radius */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-  --radius-full: 9999px;
+  --radius-sm: 0px !important;
+  --radius-md: 0px !important;
+  --radius-lg: 0px !important;
+  --radius-xl: 0px !important;
+  --radius-full: 0px !important;
   
   /* Typography */
   --font-display: 'Playfair Display', 'Inter', serif;
@@ -64,6 +64,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  border-radius: 0px !important;
 }
 
 html {
@@ -76,7 +77,7 @@ body {
     font-family: "Poppins", sans-serif;
 
   color: var(--primary-black);
-  background: var(--off-white);
+  background: #f1f4fa;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -151,7 +152,7 @@ a:hover {
   font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
-  border-radius: var(--radius-full);
+  border-radius: 0px !important;
   transition: var(--transition-smooth);
   border: 2px solid transparent;
   cursor: pointer;
@@ -348,7 +349,7 @@ a:hover {
 .form-control {
   background: var(--white);
   border: 2px solid var(--medium-gray);
-  border-radius: var(--radius-sm);
+  border-radius: 0px !important;
   padding: 0.75rem 1.25rem;
   font-family: var(--font-primary);
   font-size: 1rem;

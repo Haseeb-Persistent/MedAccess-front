@@ -1,555 +1,357 @@
-/* header.component.css - Fixed Header with Scroll Effects */
-/* ===== RENTLY HEADER - WITH SCROLL EFFECTS ===== */
+/* =========================================
+   RESET
+========================================= */
 
 * {
   padding: 0;
   margin: 0;
+  text-decoration: none;
+  list-style: none;
   box-sizing: border-box;
 }
 
-:root {
-  --primary-green: #46d56b;
-  --primary-blue: #036ff3;
-  --primary-black: #000000;
-  --white: #ffffff;
-  --text-muted: #4a5568;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --shadow-scrolled: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
 
-/* ----- Base Navbar ----- */
-.navbar {
-  background: transparent;
+/* =========================================
+   NAVBAR
+========================================= */
+
+nav {
+  background: #074888;
   height: 80px;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1030;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Default white background for all pages except home */
-.navbar:not(.header-scrolled):not(.home-page) {
-  background: rgba(255, 255, 255, 0.97) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: var(--shadow-scrolled);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-/* Home page transparent background */
-.navbar.home-page {
-  background: transparent;
-}
-
-/* Scrolled state - white background for home page */
-.navbar.header-scrolled {
-  background: rgba(255, 255, 255, 0.97) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: var(--shadow-scrolled);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-/* Scrolled state or non-home page - logo color changes */
-.navbar.header-scrolled .logo img,
-.navbar:not(.home-page) .logo img {
-  filter: brightness(0) saturate(100%) invert(0);
-}
-
-.navbar.header-scrolled .checkbtn,
-.navbar:not(.home-page) .checkbtn {
-  color: var(--primary-black);
-}
-
-/* Scrolled state or non-home page - nav links color */
-.navbar.header-scrolled ul li a,
-.navbar:not(.home-page) ul li a {
-  color: var(--text-muted);
-}
-
-.navbar.header-scrolled ul li a:hover,
-.navbar:not(.home-page) ul li a:hover {
-  color: var(--primary-blue);
-  background: rgba(3, 111, 243, 0.06);
-}
-
-.navbar.header-scrolled ul li.active a,
-.navbar:not(.home-page) ul li.active a {
-  color: var(--primary-blue);
-  background: rgba(3, 111, 243, 0.08);
-}
-
-/* Home page - default white nav links */
-.navbar.home-page ul li a {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.navbar.home-page ul li a:hover {
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.navbar.home-page ul li.active a {
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Scrolled state or non-home page - auth buttons */
-.navbar.header-scrolled .btn-outline-primary,
-.navbar:not(.home-page) .btn-outline-primary {
-  color: var(--primary-blue);
-  border-color: var(--primary-blue);
-}
-
-.navbar.header-scrolled .btn-outline-primary:hover,
-.navbar:not(.home-page) .btn-outline-primary:hover {
-  background: var(--primary-blue);
-  color: var(--white);
-}
-
-.navbar.header-scrolled .btn-primary,
-.navbar:not(.home-page) .btn-primary {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-  color: var(--white);
-}
-
-.navbar.header-scrolled .btn-primary:hover,
-.navbar:not(.home-page) .btn-primary:hover {
-  background: var(--blue-dark);
-  border-color: var(--blue-dark);
-}
-
-/* Home page - default white auth buttons */
-.navbar.home-page .btn-outline-primary {
-  color: var(--white);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.navbar.home-page .btn-outline-primary:hover {
-  background: var(--primary-green);
-  border-color: var(--primary-green);
-  color: var(--white);
-}
-
-.navbar.home-page .btn-primary {
-  background: var(--primary-blue);
-  border-color: var(--primary-blue);
-  color: var(--white);
-}
-
-.navbar.home-page .btn-primary:hover {
-  background: var(--blue-dark);
-  border-color: var(--blue-dark);
-}
-
-/* ----- Container ----- */
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
-  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
-/* ----- Logo ----- */
-.logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
+
+/* =========================================
+   STICKY HEADER
+========================================= */
+
+nav.header-scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+background-color: #074888;;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+
+  animation: headerSlideDown 1s ease;
 }
+
+
+@keyframes headerSlideDown {
+
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
 
 .logo img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  transition: filter 0.4s ease;
+  width: 290px;
+  height: 290px;
+  
 }
 
-/* ----- Checkbox (hidden) ----- */
-#check {
-  display: none;
+
+/* =========================================
+   NAVIGATION MENU
+========================================= */
+
+.nav-menu {
+
+  height: 80px;
+  display: flex;
+  gap: 15px;
 }
 
-/* ----- Menu Icon (Hamburger) ----- */
+ul{
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/* =========================================
+   NAVIGATION ITEMS
+========================================= */
+
+.nav-menu li {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================
+   NAVIGATION LINKS
+========================================= */
+
+.nav-menu li a {
+
+  color: white;
+
+  font-size: 17px;
+
+  padding: 7px 13px;
+
+  border-radius: 3px;
+
+  text-transform: uppercase;
+
+  display: block;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+
+/* =========================================
+   ACTIVE / HOVER
+========================================= */
+
+.nav-menu li a.active,
+.nav-menu li a:hover {
+
+  background: #0bc759;
+
+  color: white;
+}
+
+
+/* =========================================
+   MOBILE BUTTON
+========================================= */
+
 .checkbtn {
-  font-size: 24px;
-  color: var(--white);
-  cursor: pointer;
+
   display: none;
-  padding: 5px 8px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  order: 1;
-}
 
-.checkbtn:hover {
-  color: var(--primary-green);
-}
+  background: transparent;
 
-/* ----- Navigation List ----- */
-nav ul {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+  border: none;
 
-nav ul li {
-  display: inline-block;
-  position: relative;
-}
+  outline: none;
 
-nav ul li a {
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.3s ease;
-  display: inline-block;
-  position: relative;
-}
+  color: white;
 
-/* Hover effect - underline animation for non-home pages */
-nav ul li a::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 60%;
-  height: 2.5px;
-  background: linear-gradient(90deg, var(--primary-green), var(--primary-blue));
-  border-radius: 10px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  font-size: 22px;
 
-nav ul li a:hover::after,
-nav ul li.active a::after {
-  transform: translateX(-50%) scaleX(1);
-}
-
-/* ----- Auth Buttons (Desktop) ----- */
-.auth-buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: 15px;
-}
-
-.auth-buttons .btn {
-  font-weight: 600;
-  font-size: 13px;
-  padding: 7px 18px;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  display: inline-block;
-  border: 2px solid transparent;
   cursor: pointer;
+
+  margin-left: auto;
+
+  margin-right: 30px;
+
+  width: 40px;
+
+  height: 40px;
+
+  align-items: center;
+
+  justify-content: center;
 }
 
-.btn-sm {
-  padding: 5px 14px;
-  font-size: 12px;
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1050px) {
+
+  .logo {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .nav-menu li a {
+    font-size: 16px;
+  }
+
 }
 
-/* ----- Mobile Auth Links (hidden on desktop) ----- */
-.mobile-auth-links {
-  display: none !important;
-}
 
-/* ========================================
-   RESPONSIVE - MOBILE FIRST
-   ======================================== */
+/* =========================================
+   MOBILE
+========================================= */
 
-/* ----- Mobile (≤ 890px) ----- */
 @media (max-width: 890px) {
-  .navbar {
-    height: 70px;
-  }
 
-  .container {
-    height: 70px;
-    padding: 0 15px;
-  }
-
-  .logo img {
-    width: 40px;
-    height: 40px;
-  }
-
-  /* Show hamburger menu */
-  .checkbtn {
-    display: block;
-    font-size: 22px;
-  }
-
-  /* Auth buttons hidden on mobile */
-  .auth-buttons {
-    display: none !important;
-  }
-
-  /* Mobile menu overlay */
-  nav ul {
-    position: fixed;
-    top: 70px;
-    left: -100%;
+  nav {
+    height: 80px;
     width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(10, 10, 26, 0.98);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+  }
+
+  /* Logo - LEFT */
+  .logo {
+    order: 1;
+
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+
+    padding: 0;
+
+    line-height: 80px;
+
+    margin: 0;
+  }
+
+  /* Hamburger - RIGHT */
+  .checkbtn {
+    order: 2;
+
+    display: flex;
+
+    width: 45px;
+    height: 45px;
+
+    margin: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+  }
+
+  /* Mobile Menu */
+  .nav-menu {
+    position: fixed;
+
+    top: 80px;
+    left: -100%;
+
+    width: 100%;
+    height: calc(100vh - 80px);
+
+    margin: 0;
+    padding: 40px 20px;
+
+    background: #2c3e50;
+
+    display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: flex-start;
-    padding: 30px 20px 30px;
-    margin: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    gap: 0;
+
+    text-align: center;
+
     overflow-y: auto;
-    gap: 2px;
+
+    transition: left 0.4s ease;
+
+    z-index: 999;
   }
 
-  /* Non-home page mobile menu */
-  .navbar:not(.home-page) nav ul {
-    background: rgba(255, 255, 255, 0.98) !important;
-  }
-
-  .navbar:not(.home-page) nav ul li a {
-    color: var(--text-muted);
-  }
-
-  .navbar:not(.home-page) nav ul li a:hover {
-    color: var(--primary-blue);
-    background: rgba(3, 111, 243, 0.06);
-  }
-
-  .navbar:not(.home-page) nav ul li.active a {
-    color: var(--primary-blue);
-    background: rgba(3, 111, 243, 0.08);
-  }
-
-  .navbar:not(.home-page) .mobile-auth-links .btn-outline-primary {
-    color: var(--primary-blue);
-    border-color: var(--primary-blue);
-  }
-
-  .navbar:not(.home-page) .mobile-auth-links .btn-outline-primary:hover {
-    background: var(--primary-blue);
-    color: var(--white);
-  }
-
-  .navbar:not(.home-page) .mobile-auth-links .btn-primary {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-    color: var(--white);
-  }
-
-  .navbar:not(.home-page) .mobile-auth-links .btn-primary:hover {
-    background: var(--blue-dark);
-    border-color: var(--blue-dark);
-  }
-
-  /* Scrolled state mobile menu */
-  .navbar.header-scrolled nav ul {
-    background: rgba(255, 255, 255, 0.98) !important;
-  }
-
-  .navbar.header-scrolled nav ul li a {
-    color: var(--text-muted);
-  }
-
-  .navbar.header-scrolled nav ul li a:hover {
-    color: var(--primary-blue);
-    background: rgba(3, 111, 243, 0.06);
-  }
-
-  .navbar.header-scrolled nav ul li.active a {
-    color: var(--primary-blue);
-    background: rgba(3, 111, 243, 0.08);
-  }
-
-  .navbar.header-scrolled .mobile-auth-links .btn-outline-primary {
-    color: var(--primary-blue);
-    border-color: var(--primary-blue);
-  }
-
-  .navbar.header-scrolled .mobile-auth-links .btn-outline-primary:hover {
-    background: var(--primary-blue);
-    color: var(--white);
-  }
-
-  .navbar.header-scrolled .mobile-auth-links .btn-primary {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-    color: var(--white);
-  }
-
-  .navbar.header-scrolled .mobile-auth-links .btn-primary:hover {
-    background: var(--blue-dark);
-    border-color: var(--blue-dark);
-  }
-
-  nav ul li {
-    display: block;
-    width: 100%;
-    max-width: 340px;
-  }
-
-  nav ul li a {
-    font-size: 16px;
-    padding: 14px 20px;
-    color: rgba(255, 255, 255, 0.85);
-    display: block;
-    border-radius: 12px;
-    text-align: center;
-    width: 100%;
-  }
-
-  nav ul li a::after {
-    display: none;
-  }
-
-  /* Home page mobile menu */
-  nav ul li a:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--primary-green);
-  }
-
-  nav ul li.active a {
-    color: var(--primary-green);
-    background: rgba(70, 213, 107, 0.12);
-  }
-
-  /* Show mobile auth links */
-  .mobile-auth-links {
-    display: flex !important;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 340px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .mobile-auth-links .btn {
-    width: 100%;
-    text-align: center;
-    padding: 12px 20px;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
-    text-decoration: none;
-    display: block;
-    border: 2px solid transparent;
-  }
-
-  .mobile-auth-links .btn-outline-primary {
-    color: var(--white);
-    border-color: rgba(255, 255, 255, 0.3);
-    background: transparent;
-  }
-
-  .mobile-auth-links .btn-outline-primary:hover {
-    background: var(--primary-green);
-    border-color: var(--primary-green);
-    color: var(--white);
-  }
-
-  .mobile-auth-links .btn-primary {
-    background: var(--primary-blue);
-    border-color: var(--primary-blue);
-    color: var(--white);
-  }
-
-  .mobile-auth-links .btn-primary:hover {
-    background: var(--blue-dark);
-    border-color: var(--blue-dark);
-  }
-
-  /* Show menu when checkbox is checked */
-  #check:checked ~ ul {
+  /* OPEN */
+  .nav-menu.mobile-open {
     left: 0;
   }
 
-  /* Menu open state - body overflow hidden */
-  #check:checked ~ .checkbtn {
-    color: var(--primary-green);
+  .nav-menu li {
+    width: 100%;
+
+    display: block;
+
+    margin: 15px 0;
+
+    line-height: 30px;
+  }
+
+  .nav-menu li a {
+    display: inline-block;
+
+    color: white;
+
+    font-size: 20px;
+
+    padding: 10px 20px;
+
+    border-radius: 3px;
+  }
+
+  .nav-menu li a.active,
+  .nav-menu li a:hover {
+    background: none;
+    color: #0082e6;
   }
 }
 
-/* ----- Extra Small Devices (≤ 480px) ----- */
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
 @media (max-width: 480px) {
-  .navbar {
-    height: 60px;
+
+  .logo {
+
+    font-size: 20px;
+
+    padding-left: 20px;
+
   }
 
-  .container {
-    height: 60px;
-    padding: 0 12px;
-  }
-
-  .logo img {
-    width: 34px;
-    height: 34px;
-  }
 
   .checkbtn {
-    font-size: 20px;
+
+    margin-right: 20px;
+
   }
 
-  nav ul {
-    top: 60px;
-    height: calc(100vh - 60px);
-    padding: 20px 15px 20px;
+
+  .nav-menu {
+
+    padding-top: 30px;
+
   }
 
-  nav ul li a {
-    font-size: 15px;
-    padding: 12px 16px;
+
+  .nav-menu li {
+
+    margin: 12px 0;
+
   }
 
-  .mobile-auth-links .btn {
-    padding: 10px 16px;
-    font-size: 14px;
+
+  .nav-menu li a {
+
+    font-size: 18px;
+
   }
-}
 
-/* ----- Scrollbar for mobile menu ----- */
-nav ul::-webkit-scrollbar {
-  width: 4px;
-}
-
-nav ul::-webkit-scrollbar-thumb {
-  background: var(--primary-green);
-  border-radius: 10px;
-}
-
-nav ul::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-/* ----- Focus styles ----- */
-#check:focus-visible + .checkbtn {
-  outline: 2px solid var(--primary-blue);
-  outline-offset: 2px;
-}
-
-.checkbtn:active {
-  transform: scale(0.92);
 }

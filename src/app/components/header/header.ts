@@ -1,4 +1,11 @@
-import { Component, OnInit, HostListener, ElementRef, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ElementRef,
+  inject
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -11,6 +18,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.css']
 })
 export class Header implements OnInit {
+
   private authService = inject(AuthService);
   private router = inject(Router);
   private el = inject(ElementRef);
@@ -27,21 +35,31 @@ export class Header implements OnInit {
     this.initStickyHeader();
   }
 
+  // ==============================
+  // MOBILE MENU
+  // ==============================
+
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    if (this.isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+
+    this.updateBodyScroll();
   }
 
   closeMobileMenu(): void {
     if (this.isMobileMenuOpen) {
       this.isMobileMenuOpen = false;
-      document.body.style.overflow = '';
+      this.updateBodyScroll();
     }
   }
+
+  private updateBodyScroll(): void {
+    document.body.style.overflow =
+      this.isMobileMenuOpen ? 'hidden' : '';
+  }
+
+  // ==============================
+  // DROPDOWN
+  // ==============================
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -51,27 +69,49 @@ export class Header implements OnInit {
     this.isDropdownOpen = false;
   }
 
+  // ==============================
+  // ROUTING
+  // ==============================
+
   isActive(route: string): boolean {
     return this.router.url === route;
   }
 
+  // ==============================
+  // LOGOUT
+  // ==============================
+
   logout(): void {
     this.authService.logout();
+
     this.closeMobileMenu();
     this.closeDropdown();
   }
 
-  @HostListener('window:scroll', [])
+  // ==============================
+  // STICKY HEADER
+  // ==============================
+
+  @HostListener('window:scroll')
   initStickyHeader(): void {
-    const header = document.getElementById('ftco-navbar');
-    if (header) {
-      if (window.scrollY > 50) {
-        header.classList.add('header-scrolled');
-      } else {
-        header.classList.remove('header-scrolled');
-      }
+
+    const header =
+      this.el.nativeElement.querySelector('#ftco-navbar');
+
+    if (!header) {
+      return;
+    }
+
+    if (window.scrollY > 50) {
+      header.classList.add('header-scrolled');
+    } else {
+      header.classList.remove('header-scrolled');
     }
   }
+
+  // ==============================
+  // ESCAPE KEY
+  // ==============================
 
   @HostListener('document:keydown.escape')
   onEscapeKey(): void {
@@ -79,34 +119,55 @@ export class Header implements OnInit {
     this.closeDropdown();
   }
 
+  // ==============================
+  // OUTSIDE CLICK
+  // ==============================
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    // Close mobile menu
+
+    const target = event.target as HTMLElement;
+
+    // Mobile menu
     if (this.isMobileMenuOpen) {
-      const target = event.target as HTMLElement;
-      const navbar = this.el.nativeElement.querySelector('ul');
-      const toggler = this.el.nativeElement.querySelector('.checkbtn');
-      if (navbar && toggler) {
-        if (!navbar.contains(target) && !toggler.contains(target)) {
-          this.closeMobileMenu();
-        }
+
+      const navbar =
+        this.el.nativeElement.querySelector('.nav-menu');
+
+      const toggler =
+        this.el.nativeElement.querySelector('.checkbtn');
+
+      if (
+        navbar &&
+        toggler &&
+        !navbar.contains(target) &&
+        !toggler.contains(target)
+      ) {
+        this.closeMobileMenu();
       }
     }
 
-    // Close dropdown
+    // User dropdown
     if (this.isDropdownOpen) {
-      const target = event.target as HTMLElement;
-      const dropdown = this.el.nativeElement.querySelector('.user-dropdown');
+
+      const dropdown =
+        this.el.nativeElement.querySelector('.user-dropdown');
+
       if (dropdown && !dropdown.contains(target)) {
         this.closeDropdown();
       }
     }
   }
 
+  // ==============================
+  // WINDOW RESIZE
+  // ==============================
+
   @HostListener('window:resize')
   onResize(): void {
-    if (window.innerWidth >= 992 && this.isMobileMenuOpen) {
+
+    if (window.innerWidth > 890) {
       this.closeMobileMenu();
     }
   }
-}
+} 
